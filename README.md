@@ -85,7 +85,7 @@ player “big-match boost.”
 Run the pre-deadline forecast comparison with:
 
 ```bash
-python fpl_fixture_hypothesis/heldout_prediction.py --data-root data
+.venv/bin/python heldout_prediction.py --data-root data
 ```
 
 This trains two otherwise identical gradient-boosting point models on
@@ -152,13 +152,59 @@ earlier seasons and test 2022–23, 2023–24, 2024–25, and 2025–26 in turn.
 intervals, coefficient checks, Elo carryover comparisons, and matchup groups.
 The script also emits a row-level out-of-sample CSV for audit.
 
-On 50,125 out-of-sample fixture rows, baseline MAE is 1.0373 points.
-Adding opponent Elo alone raises MAE to 1.0419, though RMSE falls from
-2.0194 to 2.0159. Adding the interaction lowers MAE to 1.0336 and RMSE to
-2.0133. Thus the three-way comparison finds a small, model-dependent gain,
+On 50,125 out-of-sample fixture rows, baseline MAE is 1.0423 points.
+Adding opponent Elo alone raises MAE to 1.0540, though RMSE falls from
+2.0195 to 2.0165. Adding the interaction lowers MAE to 1.0386 and RMSE to
+2.0134. These refreshed results retain negative predictions instead of clipping
+them to zero. Thus the three-way comparison finds a small, model-dependent gain,
 not a clear standalone opponent-Elo gain. A separate 60+-minute diagnostic
 has larger fixture gains but conditions on minutes that are unknown at the
 deadline. No transfer strategy is optimized in this validation.
+
+## Nonlinear model validation
+
+The controlled model comparison reuses the prospective feature definitions and
+chronological test seasons. It evaluates direct expected-point regression and a
+two-stage participation-times-conditional-points forecast for Ridge, CatBoost,
+TabICL, and (when licensed) TabPFN:
+
+```bash
+.venv/bin/python model_comparison.py \
+  --models ridge catboost tabicl \
+  --approaches direct two_stage \
+  --feature-specs baseline elo interaction \
+  --context-sizes 5000 \
+  --foundation-estimators 1
+```
+
+The initial one-seed, one-estimator run retains the natural zero-minute rate and
+does not clip predictions. TabICL and TabPFN are explicitly asked for predictive
+means. Direct TabICL with the interaction has MAE 1.0073 and RMSE 2.0169, versus
+1.0133 and 2.0203 without opponent strength. The corresponding paired gains are
+0.0060 MAE (95% CI 0.0041 to 0.0079) and 0.0033 RMSE (0.0002 to 0.0066):
+detectable, but very small in FPL terms. Results for the pre-deadline
+likely-starter subset and ranking diagnostics are mixed, and the two-stage model
+is not consistently better than direct regression.
+
+TabPFN currently requires one-time license acceptance and a `TABPFN_TOKEN` from
+[Prior Labs](https://ux.priorlabs.ai). The runner records this as an unavailable
+experiment cell rather than discarding completed results. See
+`model_comparison_results/RESULTS.md` and `summary.json` for the complete initial
+tables and limitations.
+
+Audit the historical selection pool separately with:
+
+```bash
+.venv/bin/python candidate_universe_audit.py
+```
+
+This creates one candidate row per player-gameweek, retains blank-gameweek
+players, and aggregates double gameweeks. It is a restricted reconstruction,
+not a verified deadline snapshot: historical eligibility/status is unavailable,
+blank-week prices are carried forward, and final fixture files can contain
+rescheduling hindsight. No new transfer strategy should be optimized until the
+model comparison is repeated at larger contexts and the candidate-universe
+limitations are addressed.
 
 ## 3. Constrained squad backtest
 

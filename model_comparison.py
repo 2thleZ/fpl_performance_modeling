@@ -114,6 +114,58 @@ def paired_improvement(frame: pd.DataFrame, first: str, second: str,
     }
 
 
+def pooled_model_comparisons(prediction_frame: pd.DataFrame) -> list[dict[str, Any]]:
+    """Compare each model with Ridge after matching rows across all test seasons."""
+    results = []
+    config = ["context_size", "seed", "feature_spec", "approach"]
+    for _, group in prediction_frame.groupby(config, sort=False):
+        ridge = group.loc[group.model.eq("ridge"),
+                          KEYS + ["total_points", "prediction", "run_id"]]
+        if ridge.empty:
+            continue
+        ridge_ids = ridge.run_id.drop_duplicates().tolist()
+        ridge = ridge.drop(columns="run_id").rename(columns={"prediction": "first"})
+        for model_name in group.model.drop_duplicates():
+            if model_name == "ridge":
+                continue
+            other = group.loc[group.model.eq(model_name), KEYS + ["prediction", "run_id"]]
+            other_ids = other.run_id.drop_duplicates().tolist()
+            other = other.drop(columns="run_id").rename(columns={"prediction": "second"})
+            paired = ridge.merge(other, on=KEYS, validate="one_to_one")
+            gain = paired_improvement(paired, "first", "second")
+            gain.update({"baseline_model": "ridge", "comparison_model": model_name,
+                         "baseline_runs": ridge_ids, "comparison_runs": other_ids})
+            results.append(gain)
+    return results
+
+
+def pooled_fixture_comparisons(prediction_frame: pd.DataFrame) -> list[dict[str, Any]]:
+    """Compare fixture specifications after matching rows across all test seasons."""
+    results = []
+    config = ["context_size", "seed", "model", "approach"]
+    for _, group in prediction_frame.groupby(config, sort=False):
+        baseline = group.loc[group.feature_spec.eq("baseline"),
+                             KEYS + ["total_points", "prediction", "run_id"]]
+        if baseline.empty:
+            continue
+        baseline_ids = baseline.run_id.drop_duplicates().tolist()
+        baseline = baseline.drop(columns="run_id").rename(columns={"prediction": "first"})
+        for feature_spec in group.feature_spec.drop_duplicates():
+            if feature_spec == "baseline":
+                continue
+            fixture = group.loc[group.feature_spec.eq(feature_spec),
+                                KEYS + ["prediction", "run_id"]]
+            fixture_ids = fixture.run_id.drop_duplicates().tolist()
+            fixture = fixture.drop(columns="run_id").rename(columns={"prediction": "second"})
+            paired = baseline.merge(fixture, on=KEYS, validate="one_to_one")
+            gain = paired_improvement(paired, "first", "second")
+            gain.update({"baseline_feature_spec": "baseline",
+                         "comparison_feature_spec": feature_spec,
+                         "baseline_runs": baseline_ids, "comparison_runs": fixture_ids})
+            results.append(gain)
+    return results
+
+
 def _ridge_regressor() -> Any:
     return make_pipeline(SimpleImputer(strategy="median"), StandardScaler(), Ridge(alpha=100.0))
 
@@ -205,6 +257,10 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
         "zero_minutes_nonzero_points": int((data.minutes.eq(0) & data.total_points.ne(0)).sum()),
         "likely_starter_definition": "minutes6 >= 45 and rate60 >= 0.5, using earlier fixtures only",
         "prediction_postprocessing": "none; negative predictive means retained",
+        "context_sizes": args.context_sizes, "seeds": args.seeds,
+        "models": args.models, "approaches": args.approaches,
+        "feature_specs": args.feature_specs,
+        "foundation_estimators": int(args.foundation_estimators), "device": args.device,
     }
     predictions, runs = [], []
     for context_size in args.context_sizes:
@@ -265,45 +321,25 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                             runs.append(entry)
                             print(run_id, f"{elapsed:.1f}s", entry["all"]["rmse"])
     prediction_frame = pd.concat(predictions, ignore_index=True) if predictions else pd.DataFrame()
-    summary: dict[str, Any] = {"dataset": metadata, "runs": runs,
+    summary: dict[str, Any] = {"dataset": metadata, "runs": runs, "overall": [],
                                "model_vs_ridge": [], "fixture_spec_improvements": []}
-    config = ["context_size", "seed", "feature_spec", "approach"]
-    run_lookup = pd.DataFrame(runs).set_index("run_id")
     if prediction_frame.empty:
         return summary, prediction_frame
-    for _, group in prediction_frame.groupby(config, sort=False):
-        wide = group.pivot(index=KEYS, columns="run_id", values="prediction").reset_index()
-        actual = group.drop_duplicates(KEYS)[KEYS + ["total_points"]]
-        wide = actual.merge(wide, on=KEYS, validate="one_to_one")
-        ids = [c for c in wide.columns if c not in KEYS + ["total_points"]]
-        ridge_ids = [i for i in ids if run_lookup.loc[i, "model"] == "ridge"]
-        if not ridge_ids:
-            continue
-        ridge_id = ridge_ids[0]
-        for other_id in ids:
-            if other_id == ridge_id:
-                continue
-            gain = paired_improvement(wide.rename(columns={ridge_id: "first", other_id: "second"}),
-                                      "first", "second")
-            gain.update({"baseline_run": ridge_id, "comparison_run": other_id})
-            summary["model_vs_ridge"].append(gain)
-    fixture_config = ["context_size", "seed", "model", "approach"]
-    for _, group in prediction_frame.groupby(fixture_config, sort=False):
-        wide = group.pivot(index=KEYS, columns="run_id", values="prediction").reset_index()
-        actual = group.drop_duplicates(KEYS)[KEYS + ["total_points"]]
-        wide = actual.merge(wide, on=KEYS, validate="one_to_one")
-        ids = [c for c in wide.columns if c not in KEYS + ["total_points"]]
-        baseline_ids = [i for i in ids if run_lookup.loc[i, "feature_spec"] == "baseline"]
-        if not baseline_ids:
-            continue
-        baseline_id = baseline_ids[0]
-        for fixture_id in ids:
-            if fixture_id == baseline_id:
-                continue
-            gain = paired_improvement(wide.rename(columns={baseline_id: "first", fixture_id: "second"}),
-                                      "first", "second")
-            gain.update({"baseline_run": baseline_id, "comparison_run": fixture_id})
-            summary["fixture_spec_improvements"].append(gain)
+    overall_config = ["context_size", "seed", "feature_spec", "model", "approach"]
+    for key, group in prediction_frame.groupby(overall_config, sort=False):
+        entry = {name: value.item() if isinstance(value, np.generic) else value
+                 for name, value in zip(overall_config, key)}
+        for population, mask in {"all": np.ones(len(group), dtype=bool),
+                                 "likely_starter": likely_starter_mask(group)}.items():
+            subset = group.loc[mask]
+            entry[population] = regression_metrics(subset.total_points, subset.prediction)
+            entry[population]["ranking"] = ranking_metrics(subset)
+        if entry["approach"] == "two_stage":
+            entry["participation_brier"] = float(brier_score_loss(
+                group.minutes.gt(0).astype(int), group.play_probability))
+        summary["overall"].append(entry)
+    summary["model_vs_ridge"] = pooled_model_comparisons(prediction_frame)
+    summary["fixture_spec_improvements"] = pooled_fixture_comparisons(prediction_frame)
     return summary, prediction_frame
 
 
@@ -334,6 +370,7 @@ def main() -> None:
     flat_runs = pd.json_normalize(summary["runs"])
     flat_runs.drop(columns=[c for c in flat_runs.columns if "calibration_bins" in c]).to_csv(
         args.out / "metrics.csv", index=False)
+    pd.json_normalize(summary["overall"]).to_csv(args.out / "overall_metrics.csv", index=False)
     pd.DataFrame(summary["model_vs_ridge"]).to_csv(args.out / "model_vs_ridge.csv", index=False)
     pd.DataFrame(summary["fixture_spec_improvements"]).to_csv(
         args.out / "fixture_spec_improvements.csv", index=False)
