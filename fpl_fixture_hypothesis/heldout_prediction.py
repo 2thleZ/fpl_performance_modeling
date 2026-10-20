@@ -9,7 +9,8 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import HistGradientBoostingRegressor
+from sklearn.ensemble import HistGradientBoostingClassifier, HistGradientBoostingRegressor
+from sklearn.metrics import brier_score_loss, roc_auc_score
 
 from fpl_fixture_hypothesis import SEASONS, get_fixture_data
 
@@ -21,6 +22,7 @@ BASELINE_FEATURES = [
     "season_minutes_per_fixture", "value", "is_gk", "is_def", "is_fwd", "event_scaled",
 ]
 FIXTURE_FEATURES = BASELINE_FEATURES + ["opp_100", "own_100", "elo_gap_100", "home"]
+AVAILABILITY_FEATURES = FIXTURE_FEATURES
 
 
 def pre_deadline_features(appearances: pd.DataFrame) -> pd.DataFrame:
@@ -81,6 +83,65 @@ def make_model() -> HistGradientBoostingRegressor:
     )
 
 
+def make_start_model() -> HistGradientBoostingClassifier:
+    """Estimate whether a player starts, using the seasons with exact labels."""
+    return HistGradientBoostingClassifier(
+        learning_rate=0.05, max_iter=250, max_leaf_nodes=15,
+        min_samples_leaf=40, l2_regularization=2.0, random_state=2026,
+    )
+
+
+def fit_availability_models(
+    train: pd.DataFrame,
+) -> tuple[HistGradientBoostingClassifier, HistGradientBoostingRegressor, HistGradientBoostingRegressor]:
+    """Fit start probability plus points models conditional on starting status.
+
+    Exact ``starts`` labels are present from 2022-23 onward in this archive; no
+    older, minutes-based proxy is substituted for them.
+    """
+    labelled = train.loc[train["starts"].notna()].copy()
+    if labelled.empty or labelled["starts"].nunique() != 2:
+        raise ValueError("Exact historic start labels are required for availability modelling")
+    start = labelled["starts"].astype(int)
+    starter_points = labelled.loc[start.eq(1)]
+    bench_points = labelled.loc[start.eq(0)]
+    return (
+        make_start_model().fit(labelled[AVAILABILITY_FEATURES], start),
+        make_model().fit(starter_points[FIXTURE_FEATURES], starter_points["total_points"]),
+        make_model().fit(bench_points[FIXTURE_FEATURES], bench_points["total_points"]),
+    )
+
+
+def add_availability_predictions(
+    frame: pd.DataFrame,
+    models: tuple[HistGradientBoostingClassifier, HistGradientBoostingRegressor,
+                  HistGradientBoostingRegressor],
+) -> pd.DataFrame:
+    """Add a start-aware expected-points forecast without observing the outcome."""
+    start_model, starter_model, bench_model = models
+    d = frame.copy()
+    d["start_probability"] = start_model.predict_proba(d[AVAILABILITY_FEATURES])[:, 1]
+    d["starter_points_prediction"] = np.maximum(
+        0.0, starter_model.predict(d[FIXTURE_FEATURES]))
+    d["bench_points_prediction"] = np.maximum(
+        0.0, bench_model.predict(d[FIXTURE_FEATURES]))
+    d["availability_prediction"] = (
+        d["start_probability"] * d["starter_points_prediction"] +
+        (1.0 - d["start_probability"]) * d["bench_points_prediction"]
+    )
+    return d
+
+
+def start_metrics(actual: pd.Series, probability: pd.Series) -> dict[str, float | int]:
+    y = actual.astype(int)
+    return {
+        "observations": int(len(y)),
+        "start_rate": float(y.mean()),
+        "brier_score": float(brier_score_loss(y, probability)),
+        "roc_auc": float(roc_auc_score(y, probability)),
+    }
+
+
 def metrics(actual: pd.Series, prediction: pd.Series) -> dict[str, float]:
     error = np.asarray(prediction) - np.asarray(actual)
     return {
@@ -138,6 +199,11 @@ def save_outputs(test: pd.DataFrame, gameweeks: pd.DataFrame, out: Path) -> dict
         "holdout_season": HOLDOUT_SEASON,
         "features_frozen_by_gameweek": True,
         "elo_frozen_by_gameweek": True,
+        "availability_model": {
+            "definition": "Exact FPL starts label; trained only on labelled 2022-23 to 2024-25 data.",
+            "test": start_metrics(test.loc[test["starts"].notna(), "starts"],
+                                  test.loc[test["starts"].notna(), "start_probability"]),
+        },
         "fixture_level": {
             "baseline": metrics(test["total_points"], test["baseline_prediction"]),
             "fixture_aware": metrics(test["total_points"], test["fixture_prediction"]),
@@ -211,6 +277,7 @@ def main() -> None:
     fixture = make_model().fit(train[FIXTURE_FEATURES], train["total_points"])
     test["baseline_prediction"] = np.maximum(0.0, baseline.predict(test[BASELINE_FEATURES]))
     test["fixture_prediction"] = np.maximum(0.0, fixture.predict(test[FIXTURE_FEATURES]))
+    test = add_availability_predictions(test, fit_availability_models(train))
     gameweeks = aggregate_gameweeks(test)
     summary = save_outputs(test, gameweeks, args.out)
     print(json.dumps(summary, indent=2))

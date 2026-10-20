@@ -8,24 +8,25 @@
   "budget": "\u00a3100.0m",
   "rules": {
     "squad": "2 GK, 5 DEF, 5 MID, 3 FWD; maximum 3 players per club",
-    "lineup": "predicted legal XI and predicted captain; no automatic substitutions or chips",
-    "transfers": "one free transfer per gameweek; additional transfers cost 4 points; free-transfer rollovers are not modeled",
-    "pricing": "price at acquisition; incoming players use their current price; FPL selling-price effects are not modeled"
+    "lineup": "predicted legal XI and predicted captain; score uses an explicit start-probability and conditional-points model; no automatic substitutions or chips",
+    "transfers": "one free transfer per gameweek; unused transfers bank up to five; additional transfers cost 4 points",
+    "pricing": "price at acquisition; incoming players use their current price; FPL selling-price effects are not modeled",
+    "horizon": "Fixture-hybrid transfer decisions use the current plus next 3 gameweeks, with weights [1.0, 0.8, 0.6, 0.4] and deadline-frozen player/team inputs."
   },
   "summary": [
     {
       "strategy": "Fixture churn",
-      "net_points": 552.0,
-      "squad_points": 1692.0,
-      "transfer_hits": 1140,
-      "transfers": 314
+      "net_points": 929.0,
+      "squad_points": 1609.0,
+      "transfer_hits": 680,
+      "transfers": 200
     },
     {
       "strategy": "Fixture hybrid",
-      "net_points": 1565.0,
-      "squad_points": 1565.0,
+      "net_points": 1571.0,
+      "squad_points": 1571.0,
       "transfer_hits": 0,
-      "transfers": 29
+      "transfers": 30
     },
     {
       "strategy": "Quality hold",
