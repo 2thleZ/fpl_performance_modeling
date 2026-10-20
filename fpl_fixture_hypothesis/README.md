@@ -4,8 +4,9 @@ This project tests whether stronger opposition is associated with fewer Fantasy 
 
 ## Install and run
 
-Requirements: Python 3.10+, pandas, numpy, matplotlib, and statsmodels. With the
-downloaded archive in the project-level `data/` directory, run from the project root:
+Requirements: Python 3.10+, pandas, numpy, matplotlib, statsmodels, and
+scikit-learn. With the downloaded archive in the project-level `data/` directory,
+run from the project root:
 
 ```bash
 python fpl_fixture_hypothesis/fpl_fixture_hypothesis.py --data-root data
@@ -16,7 +17,7 @@ This reads local CSVs only. The default hypothesis sample stops at 2024–25 so 
 can download the archived CSVs:
 
 ```bash
-python -m pip install pandas numpy matplotlib statsmodels
+python -m pip install pandas numpy matplotlib statsmodels scikit-learn
 python fpl_fixture_hypothesis.py
 ```
 
@@ -51,6 +52,38 @@ python fpl_fixture_hypothesis.py
 - `results/team_matchups.csv`: raw means for combinations of own-team and opposing-team strength.
 - `results/regression_coefficients.csv`: fixed-effects regression with confidence intervals and p-values.
 - `results/results.json`: sample sizes, top/bottom quartile opposition slopes, plus sensitivity estimates using players who played at least 75 minutes.
+
+## Held-out prediction test
+
+Run the pre-deadline forecast comparison with:
+
+```bash
+python fpl_fixture_hypothesis/heldout_prediction.py --data-root data
+```
+
+This trains two otherwise identical gradient-boosting models on 2016–17 through
+2024–25 and evaluates them only on 2025–26:
+
+- The **player-history baseline** uses prior points, prior minutes, prior 60-minute
+  rate, longer-run season averages, price, position, and gameweek.
+- The **fixture-aware model** adds pre-match opponent Elo, own-team Elo, their
+  difference, and home advantage.
+
+All rolling features are frozen at the gameweek deadline. Two fixtures in the same
+gameweek therefore receive the same player-history features, while their individual
+fixture features may differ. Fixture predictions are summed before player-gameweek
+metrics are calculated.
+
+Outputs are written under `heldout_results/`:
+
+- `summary.json`: error, ranking correlation, paired gameweek bootstrap, and an
+  unconstrained top-20 ranking diagnostic.
+- `mae_by_gameweek.csv`: player-gameweek error for each held-out gameweek.
+- `top20_by_gameweek.csv`: realized points from the two unconstrained rankings.
+- `heldout_comparison.png`: error and cumulative ranking comparison.
+
+The top-20 calculation is a diagnostic of ranking signal. It does not enforce FPL
+budget, formation, club limits, captaincy, transfers, or points hits.
 
 ## Important caveats
 
