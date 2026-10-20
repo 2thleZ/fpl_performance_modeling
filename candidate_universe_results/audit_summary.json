@@ -1,0 +1,3229 @@
+{
+  "classification": "restricted candidate-universe reconstruction, not verified deadline snapshots",
+  "sources": {
+    "membership": "players observed in the current or an earlier archived gameweek row",
+    "scheduled_price": "value in the archived gameweek fixture row; exact capture time is not documented",
+    "blank_price": "last observed archived value carried forward",
+    "position": "gameweek row where present, otherwise season-end players_raw.csv",
+    "eligibility": "unavailable historically",
+    "schedule": "season-final fixtures.csv; may contain postponement/rescheduling hindsight"
+  },
+  "limitations": [
+    "Players never observed before a blank gameweek cannot be reconstructed for that deadline.",
+    "Transfers or price changes during a blank gameweek may be carried forward incorrectly.",
+    "The archive does not verify status, can_select, or the fixture schedule as known at each deadline."
+  ],
+  "seasons": [
+    {
+      "season": "2016-17",
+      "status": "no_fixture_table"
+    },
+    {
+      "season": "2017-18",
+      "status": "no_fixture_table"
+    },
+    {
+      "season": "2018-19",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 21788,
+      "unique_players": 624,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 525,
+          "scheduled_players": 525,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 527,
+          "scheduled_players": 527,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 531,
+          "scheduled_players": 531,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 537,
+          "scheduled_players": 537,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 537,
+          "scheduled_players": 537,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 538,
+          "scheduled_players": 538,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 539,
+          "scheduled_players": 539,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 542,
+          "scheduled_players": 542,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 546,
+          "scheduled_players": 546,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 548,
+          "scheduled_players": 548,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 550,
+          "scheduled_players": 550,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 552,
+          "scheduled_players": 552,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 553,
+          "scheduled_players": 553,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 556,
+          "scheduled_players": 556,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 558,
+          "scheduled_players": 558,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 559,
+          "scheduled_players": 559,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 562,
+          "scheduled_players": 562,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 565,
+          "scheduled_players": 565,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 568,
+          "scheduled_players": 568,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 568,
+          "scheduled_players": 568,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 570,
+          "scheduled_players": 570,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 574,
+          "scheduled_players": 574,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 578,
+          "scheduled_players": 578,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 583,
+          "scheduled_players": 583,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 597,
+          "scheduled_players": 597,
+          "blank_players_reconstructed": 0,
+          "double_players": 57,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 600,
+          "scheduled_players": 600,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 600,
+          "scheduled_players": 484,
+          "blank_players_reconstructed": 116,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 605,
+          "scheduled_players": 605,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 606,
+          "scheduled_players": 606,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 608,
+          "scheduled_players": 608,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 608,
+          "scheduled_players": 306,
+          "blank_players_reconstructed": 302,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 608,
+          "scheduled_players": 608,
+          "blank_players_reconstructed": 0,
+          "double_players": 294,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 609,
+          "scheduled_players": 373,
+          "blank_players_reconstructed": 236,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 612,
+          "scheduled_players": 612,
+          "blank_players_reconstructed": 0,
+          "double_players": 61,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 614,
+          "scheduled_players": 614,
+          "blank_players_reconstructed": 0,
+          "double_players": 244,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 615,
+          "scheduled_players": 615,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 616,
+          "scheduled_players": 616,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 624,
+          "scheduled_players": 624,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2019-20",
+      "status": "restricted_reconstruction",
+      "gameweeks": 47,
+      "rows": 28145,
+      "unique_players": 666,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 526,
+          "scheduled_players": 526,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 529,
+          "scheduled_players": 529,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 529,
+          "scheduled_players": 529,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 532,
+          "scheduled_players": 532,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 539,
+          "scheduled_players": 539,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 541,
+          "scheduled_players": 541,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 546,
+          "scheduled_players": 546,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 551,
+          "scheduled_players": 551,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 555,
+          "scheduled_players": 555,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 556,
+          "scheduled_players": 556,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 557,
+          "scheduled_players": 557,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 559,
+          "scheduled_players": 559,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 560,
+          "scheduled_players": 560,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 564,
+          "scheduled_players": 564,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 565,
+          "scheduled_players": 565,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 569,
+          "scheduled_players": 569,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 576,
+          "scheduled_players": 576,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 578,
+          "scheduled_players": 520,
+          "blank_players_reconstructed": 58,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 580,
+          "scheduled_players": 580,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 584,
+          "scheduled_players": 584,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 586,
+          "scheduled_players": 586,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 597,
+          "scheduled_players": 597,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 606,
+          "scheduled_players": 606,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 607,
+          "scheduled_players": 607,
+          "blank_players_reconstructed": 0,
+          "double_players": 65,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 619,
+          "scheduled_players": 619,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 623,
+          "scheduled_players": 623,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 624,
+          "scheduled_players": 624,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 626,
+          "scheduled_players": 504,
+          "blank_players_reconstructed": 122,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 628,
+          "scheduled_players": 628,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 628,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 628,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 39,
+          "candidate_rows": 638,
+          "scheduled_players": 638,
+          "blank_players_reconstructed": 0,
+          "double_players": 123,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 40,
+          "candidate_rows": 644,
+          "scheduled_players": 644,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 41,
+          "candidate_rows": 648,
+          "scheduled_players": 648,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 42,
+          "candidate_rows": 652,
+          "scheduled_players": 652,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 43,
+          "candidate_rows": 653,
+          "scheduled_players": 653,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 44,
+          "candidate_rows": 654,
+          "scheduled_players": 654,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 45,
+          "candidate_rows": 661,
+          "scheduled_players": 661,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 46,
+          "candidate_rows": 665,
+          "scheduled_players": 665,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 47,
+          "candidate_rows": 666,
+          "scheduled_players": 666,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2020-21",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 24198,
+      "unique_players": 713,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 425,
+          "scheduled_players": 425,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 539,
+          "scheduled_players": 539,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 554,
+          "scheduled_players": 554,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 562,
+          "scheduled_players": 562,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 583,
+          "scheduled_players": 583,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 590,
+          "scheduled_players": 590,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 597,
+          "scheduled_players": 597,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 600,
+          "scheduled_players": 600,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 601,
+          "scheduled_players": 601,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 603,
+          "scheduled_players": 603,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 604,
+          "scheduled_players": 541,
+          "blank_players_reconstructed": 63,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 607,
+          "scheduled_players": 607,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 607,
+          "scheduled_players": 607,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 611,
+          "scheduled_players": 611,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 614,
+          "scheduled_players": 614,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 616,
+          "scheduled_players": 491,
+          "blank_players_reconstructed": 125,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 625,
+          "scheduled_players": 560,
+          "blank_players_reconstructed": 65,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 633,
+          "scheduled_players": 395,
+          "blank_players_reconstructed": 238,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 639,
+          "scheduled_players": 610,
+          "blank_players_reconstructed": 29,
+          "double_players": 346,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 644,
+          "scheduled_players": 644,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 650,
+          "scheduled_players": 650,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 663,
+          "scheduled_players": 663,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 667,
+          "scheduled_players": 667,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 670,
+          "scheduled_players": 670,
+          "blank_players_reconstructed": 0,
+          "double_players": 132,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 673,
+          "scheduled_players": 673,
+          "blank_players_reconstructed": 0,
+          "double_players": 69,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 682,
+          "scheduled_players": 682,
+          "blank_players_reconstructed": 0,
+          "double_players": 473,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 685,
+          "scheduled_players": 685,
+          "blank_players_reconstructed": 0,
+          "double_players": 70,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 686,
+          "scheduled_players": 686,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 686,
+          "scheduled_players": 277,
+          "blank_players_reconstructed": 409,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 687,
+          "scheduled_players": 687,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 691,
+          "scheduled_players": 691,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 691,
+          "scheduled_players": 657,
+          "blank_players_reconstructed": 34,
+          "double_players": 33,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 693,
+          "scheduled_players": 555,
+          "blank_players_reconstructed": 138,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 695,
+          "scheduled_players": 623,
+          "blank_players_reconstructed": 72,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 703,
+          "scheduled_players": 703,
+          "blank_players_reconstructed": 0,
+          "double_players": 314,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 703,
+          "scheduled_players": 567,
+          "blank_players_reconstructed": 136,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 706,
+          "scheduled_players": 706,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 713,
+          "scheduled_players": 713,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2021-22",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 25321,
+      "unique_players": 737,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 554,
+          "scheduled_players": 554,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 566,
+          "scheduled_players": 566,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 577,
+          "scheduled_players": 577,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 599,
+          "scheduled_players": 599,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 606,
+          "scheduled_players": 606,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 611,
+          "scheduled_players": 611,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 613,
+          "scheduled_players": 613,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 617,
+          "scheduled_players": 617,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 618,
+          "scheduled_players": 618,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 623,
+          "scheduled_players": 623,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 624,
+          "scheduled_players": 624,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 631,
+          "scheduled_players": 631,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 633,
+          "scheduled_players": 574,
+          "blank_players_reconstructed": 59,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 636,
+          "scheduled_players": 636,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 640,
+          "scheduled_players": 640,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 647,
+          "scheduled_players": 583,
+          "blank_players_reconstructed": 64,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 656,
+          "scheduled_players": 460,
+          "blank_players_reconstructed": 196,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 661,
+          "scheduled_players": 262,
+          "blank_players_reconstructed": 399,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 665,
+          "scheduled_players": 450,
+          "blank_players_reconstructed": 215,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 669,
+          "scheduled_players": 461,
+          "blank_players_reconstructed": 208,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 678,
+          "scheduled_players": 618,
+          "blank_players_reconstructed": 60,
+          "double_players": 68,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 688,
+          "scheduled_players": 623,
+          "blank_players_reconstructed": 65,
+          "double_players": 136,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 697,
+          "scheduled_players": 697,
+          "blank_players_reconstructed": 0,
+          "double_players": 76,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 705,
+          "scheduled_players": 635,
+          "blank_players_reconstructed": 70,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 707,
+          "scheduled_players": 633,
+          "blank_players_reconstructed": 74,
+          "double_players": 67,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 711,
+          "scheduled_players": 711,
+          "blank_players_reconstructed": 0,
+          "double_players": 294,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 714,
+          "scheduled_players": 602,
+          "blank_players_reconstructed": 112,
+          "double_players": 30,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 714,
+          "scheduled_players": 714,
+          "blank_players_reconstructed": 0,
+          "double_players": 295,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 714,
+          "scheduled_players": 714,
+          "blank_players_reconstructed": 0,
+          "double_players": 227,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 714,
+          "scheduled_players": 292,
+          "blank_players_reconstructed": 422,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 720,
+          "scheduled_players": 720,
+          "blank_players_reconstructed": 0,
+          "double_players": 73,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 722,
+          "scheduled_players": 722,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 726,
+          "scheduled_players": 612,
+          "blank_players_reconstructed": 114,
+          "double_players": 242,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 728,
+          "scheduled_players": 728,
+          "blank_players_reconstructed": 0,
+          "double_players": 66,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 730,
+          "scheduled_players": 730,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 734,
+          "scheduled_players": 734,
+          "blank_players_reconstructed": 0,
+          "double_players": 464,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 736,
+          "scheduled_players": 703,
+          "blank_players_reconstructed": 33,
+          "double_players": 179,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 737,
+          "scheduled_players": 737,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2022-23",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 26337,
+      "unique_players": 778,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 573,
+          "scheduled_players": 573,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 581,
+          "scheduled_players": 581,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 592,
+          "scheduled_players": 592,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 601,
+          "scheduled_players": 601,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 608,
+          "scheduled_players": 608,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 624,
+          "scheduled_players": 624,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 624,
+          "scheduled_players": 0,
+          "blank_players_reconstructed": 624,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 631,
+          "scheduled_players": 440,
+          "blank_players_reconstructed": 191,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 638,
+          "scheduled_players": 638,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 641,
+          "scheduled_players": 641,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 643,
+          "scheduled_players": 643,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 645,
+          "scheduled_players": 585,
+          "blank_players_reconstructed": 60,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 648,
+          "scheduled_players": 648,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 656,
+          "scheduled_players": 656,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 661,
+          "scheduled_players": 661,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 667,
+          "scheduled_players": 667,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 675,
+          "scheduled_players": 675,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 678,
+          "scheduled_players": 678,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 689,
+          "scheduled_players": 689,
+          "blank_players_reconstructed": 0,
+          "double_players": 76,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 699,
+          "scheduled_players": 699,
+          "blank_players_reconstructed": 0,
+          "double_players": 135,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 707,
+          "scheduled_players": 707,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 740,
+          "scheduled_players": 740,
+          "blank_players_reconstructed": 0,
+          "double_players": 75,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 745,
+          "scheduled_players": 745,
+          "blank_players_reconstructed": 0,
+          "double_players": 65,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 746,
+          "scheduled_players": 746,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 746,
+          "scheduled_players": 602,
+          "blank_players_reconstructed": 144,
+          "double_players": 146,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 747,
+          "scheduled_players": 747,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 750,
+          "scheduled_players": 750,
+          "blank_players_reconstructed": 0,
+          "double_players": 148,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 751,
+          "scheduled_players": 539,
+          "blank_players_reconstructed": 212,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 754,
+          "scheduled_players": 754,
+          "blank_players_reconstructed": 0,
+          "double_players": 459,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 754,
+          "scheduled_players": 754,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 759,
+          "scheduled_players": 759,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 760,
+          "scheduled_players": 611,
+          "blank_players_reconstructed": 149,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 761,
+          "scheduled_players": 761,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 762,
+          "scheduled_players": 762,
+          "blank_players_reconstructed": 0,
+          "double_players": 215,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 763,
+          "scheduled_players": 763,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 765,
+          "scheduled_players": 765,
+          "blank_players_reconstructed": 0,
+          "double_players": 73,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 775,
+          "scheduled_players": 775,
+          "blank_players_reconstructed": 0,
+          "double_players": 156,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 778,
+          "scheduled_players": 778,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2023-24",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 29677,
+      "unique_players": 865,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 658,
+          "scheduled_players": 658,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 668,
+          "scheduled_players": 595,
+          "blank_players_reconstructed": 73,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 685,
+          "scheduled_players": 685,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 703,
+          "scheduled_players": 703,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 717,
+          "scheduled_players": 717,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 718,
+          "scheduled_players": 718,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 722,
+          "scheduled_players": 722,
+          "blank_players_reconstructed": 0,
+          "double_players": 82,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 725,
+          "scheduled_players": 725,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 730,
+          "scheduled_players": 730,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 731,
+          "scheduled_players": 731,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 733,
+          "scheduled_players": 733,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 743,
+          "scheduled_players": 743,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 747,
+          "scheduled_players": 747,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 753,
+          "scheduled_players": 753,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 757,
+          "scheduled_players": 757,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 758,
+          "scheduled_players": 758,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 765,
+          "scheduled_players": 686,
+          "blank_players_reconstructed": 79,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 769,
+          "scheduled_players": 700,
+          "blank_players_reconstructed": 69,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 771,
+          "scheduled_players": 771,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 773,
+          "scheduled_players": 773,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 787,
+          "scheduled_players": 787,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 799,
+          "scheduled_players": 799,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 809,
+          "scheduled_players": 809,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 814,
+          "scheduled_players": 814,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 823,
+          "scheduled_players": 823,
+          "blank_players_reconstructed": 0,
+          "double_players": 159,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 828,
+          "scheduled_players": 649,
+          "blank_players_reconstructed": 179,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 832,
+          "scheduled_players": 832,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 838,
+          "scheduled_players": 838,
+          "blank_players_reconstructed": 0,
+          "double_players": 86,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 838,
+          "scheduled_players": 344,
+          "blank_players_reconstructed": 494,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 842,
+          "scheduled_players": 842,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 844,
+          "scheduled_players": 844,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 846,
+          "scheduled_players": 846,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 851,
+          "scheduled_players": 851,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 856,
+          "scheduled_players": 815,
+          "blank_players_reconstructed": 41,
+          "double_players": 284,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 859,
+          "scheduled_players": 859,
+          "blank_players_reconstructed": 0,
+          "double_players": 101,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 859,
+          "scheduled_players": 859,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 861,
+          "scheduled_players": 861,
+          "blank_players_reconstructed": 0,
+          "double_players": 271,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 865,
+          "scheduled_players": 865,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2024-25",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 27599,
+      "unique_players": 804,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 616,
+          "scheduled_players": 616,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 627,
+          "scheduled_players": 627,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 648,
+          "scheduled_players": 648,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 659,
+          "scheduled_players": 659,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 661,
+          "scheduled_players": 661,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 664,
+          "scheduled_players": 664,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 666,
+          "scheduled_players": 666,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 667,
+          "scheduled_players": 667,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 670,
+          "scheduled_players": 670,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 674,
+          "scheduled_players": 674,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 678,
+          "scheduled_players": 678,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 684,
+          "scheduled_players": 684,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 690,
+          "scheduled_players": 690,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 693,
+          "scheduled_players": 693,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 693,
+          "scheduled_players": 630,
+          "blank_players_reconstructed": 63,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 701,
+          "scheduled_players": 701,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 701,
+          "scheduled_players": 701,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 705,
+          "scheduled_players": 705,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 709,
+          "scheduled_players": 709,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 711,
+          "scheduled_players": 711,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 724,
+          "scheduled_players": 724,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 729,
+          "scheduled_players": 729,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 756,
+          "scheduled_players": 756,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 762,
+          "scheduled_players": 762,
+          "blank_players_reconstructed": 0,
+          "double_players": 69,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 779,
+          "scheduled_players": 779,
+          "blank_players_reconstructed": 0,
+          "double_players": 79,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 783,
+          "scheduled_players": 783,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 784,
+          "scheduled_players": 784,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 789,
+          "scheduled_players": 789,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 789,
+          "scheduled_players": 639,
+          "blank_players_reconstructed": 150,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 791,
+          "scheduled_players": 791,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 792,
+          "scheduled_players": 792,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 798,
+          "scheduled_players": 798,
+          "blank_players_reconstructed": 0,
+          "double_players": 71,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 799,
+          "scheduled_players": 799,
+          "blank_players_reconstructed": 0,
+          "double_players": 155,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 800,
+          "scheduled_players": 645,
+          "blank_players_reconstructed": 155,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 801,
+          "scheduled_players": 801,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 801,
+          "scheduled_players": 801,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 801,
+          "scheduled_players": 801,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 804,
+          "scheduled_players": 804,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    },
+    {
+      "season": "2025-26",
+      "status": "restricted_reconstruction",
+      "gameweeks": 38,
+      "rows": 29747,
+      "unique_players": 841,
+      "gameweek_audit": [
+        {
+          "event": 1,
+          "candidate_rows": 690,
+          "scheduled_players": 690,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 2,
+          "candidate_rows": 705,
+          "scheduled_players": 705,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 3,
+          "candidate_rows": 712,
+          "scheduled_players": 712,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 4,
+          "candidate_rows": 740,
+          "scheduled_players": 740,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 5,
+          "candidate_rows": 741,
+          "scheduled_players": 741,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 6,
+          "candidate_rows": 742,
+          "scheduled_players": 742,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 7,
+          "candidate_rows": 743,
+          "scheduled_players": 743,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 8,
+          "candidate_rows": 745,
+          "scheduled_players": 745,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 9,
+          "candidate_rows": 746,
+          "scheduled_players": 746,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 10,
+          "candidate_rows": 747,
+          "scheduled_players": 747,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 11,
+          "candidate_rows": 752,
+          "scheduled_players": 752,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 12,
+          "candidate_rows": 755,
+          "scheduled_players": 755,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 13,
+          "candidate_rows": 755,
+          "scheduled_players": 755,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 14,
+          "candidate_rows": 758,
+          "scheduled_players": 758,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 15,
+          "candidate_rows": 759,
+          "scheduled_players": 759,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 16,
+          "candidate_rows": 760,
+          "scheduled_players": 760,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 17,
+          "candidate_rows": 770,
+          "scheduled_players": 770,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 18,
+          "candidate_rows": 775,
+          "scheduled_players": 775,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 19,
+          "candidate_rows": 780,
+          "scheduled_players": 780,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 20,
+          "candidate_rows": 790,
+          "scheduled_players": 790,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 21,
+          "candidate_rows": 795,
+          "scheduled_players": 795,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 22,
+          "candidate_rows": 799,
+          "scheduled_players": 799,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 23,
+          "candidate_rows": 803,
+          "scheduled_players": 803,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 24,
+          "candidate_rows": 811,
+          "scheduled_players": 811,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 25,
+          "candidate_rows": 817,
+          "scheduled_players": 817,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 26,
+          "candidate_rows": 817,
+          "scheduled_players": 817,
+          "blank_players_reconstructed": 0,
+          "double_players": 79,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 27,
+          "candidate_rows": 818,
+          "scheduled_players": 818,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 28,
+          "candidate_rows": 819,
+          "scheduled_players": 819,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 29,
+          "candidate_rows": 820,
+          "scheduled_players": 820,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 30,
+          "candidate_rows": 822,
+          "scheduled_players": 822,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 31,
+          "candidate_rows": 825,
+          "scheduled_players": 664,
+          "blank_players_reconstructed": 161,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 32,
+          "candidate_rows": 826,
+          "scheduled_players": 826,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 33,
+          "candidate_rows": 829,
+          "scheduled_players": 829,
+          "blank_players_reconstructed": 0,
+          "double_players": 248,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 34,
+          "candidate_rows": 830,
+          "scheduled_players": 582,
+          "blank_players_reconstructed": 248,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 35,
+          "candidate_rows": 832,
+          "scheduled_players": 832,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 36,
+          "candidate_rows": 838,
+          "scheduled_players": 838,
+          "blank_players_reconstructed": 0,
+          "double_players": 82,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 37,
+          "candidate_rows": 840,
+          "scheduled_players": 840,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        },
+        {
+          "event": 38,
+          "candidate_rows": 841,
+          "scheduled_players": 841,
+          "blank_players_reconstructed": 0,
+          "double_players": 0,
+          "missing_price": 0,
+          "missing_team": 0,
+          "missing_position": 0
+        }
+      ]
+    }
+  ],
+  "total_rows": 212812
+}
