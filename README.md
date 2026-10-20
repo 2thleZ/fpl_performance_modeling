@@ -9,12 +9,13 @@ notebook is an optional, interactive walkthrough of the original hypothesis test
 
 ## Install and run
 
-Requirements: Python 3.10+, pandas, numpy, matplotlib, statsmodels,
-scikit-learn, and SciPy. The full backtest uses `scipy.optimize.milp` and needs
-SciPy 1.9 or later. Install the dependencies with:
+Requirements: Python 3.12. Create the project environment and install the
+pinned direct dependencies with:
 
 ```bash
-python -m pip install pandas numpy matplotlib statsmodels scikit-learn 'scipy>=1.9'
+/opt/anaconda3/bin/python3.12 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements.txt
 ```
 
 Place the downloaded [vaastav/Fantasy-Premier-League data archive](https://github.com/vaastav/Fantasy-Premier-League/tree/master/data)
@@ -23,23 +24,23 @@ in the project-level `data/` directory. Each season must contain
 need `players_raw.csv` for position labels. From the project root, run:
 
 ```bash
-python fpl_fixture_hypothesis/fpl_fixture_hypothesis.py --data-root data
-python fpl_fixture_hypothesis/heldout_prediction.py --data-root data
-python fpl_fixture_hypothesis/strategy_backtest.py --data-root data
+.venv/bin/python fpl_fixture_hypothesis.py --data-root data
+.venv/bin/python heldout_prediction.py --data-root data
+.venv/bin/python strategy_backtest.py --data-root data
 ```
 
-These commands read the local archive and write outputs beside their scripts to
+These commands read the local archive and write outputs in the project root to
 `results/`, `heldout_results/`, and `strategy_results/`, respectively. The first
 script can also download its archive inputs into
-`fpl_fixture_hypothesis/data/` if run without `--data-root`:
+`data/` if run without `--data-root`:
 
 ```bash
-python fpl_fixture_hypothesis/fpl_fixture_hypothesis.py
+.venv/bin/python fpl_fixture_hypothesis.py
 ```
 
 This download option reads the third-party historical archive, not the live FPL
-service. Its cache is `fpl_fixture_hypothesis/data/`; the local archive used by
-the three commands above is the separate project-level `data/` directory.
+service. Its cache and the local archive used by the commands above are in the
+project-level `data/` directory.
 
 ## 1. Attacker fixture hypothesis
 
@@ -131,7 +132,7 @@ transfer costs.
 
 ## Prospective fixture-value validation
 
-Run `python fpl_fixture_hypothesis/prospective_validation.py` using the local
+Run `.venv/bin/python prospective_validation.py` using the local
 project-level `data/` archive. It compares three nested ridge regressions:
 historical player quality, prior minutes, prior 60-minute rate, last observed
 price, position, home advantage, gameweek, and own-team Elo; then opponent Elo;

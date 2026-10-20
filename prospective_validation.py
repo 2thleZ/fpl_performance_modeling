@@ -18,7 +18,7 @@ from sklearn.preprocessing import StandardScaler
 from fpl_fixture_hypothesis import SEASONS, download_season, get_fixture_data
 
 ROOT = Path(__file__).resolve().parent
-DATA = ROOT.parent / "data"
+DATA = ROOT / "data"
 OUT = ROOT / "prospective_results"
 SEASON_LIST = SEASONS + ("2025-26",)
 TEST_SEASONS = ("2022-23", "2023-24", "2024-25", "2025-26")
