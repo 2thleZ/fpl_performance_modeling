@@ -1,0 +1,38 @@
+{
+  "holdout_season": "2025-26",
+  "analysis_window": {
+    "first_gameweek": 9,
+    "last_gameweek": 38,
+    "reason": "Forecast features require eight prior player-gameweeks."
+  },
+  "budget": "\u00a3100.0m",
+  "rules": {
+    "squad": "2 GK, 5 DEF, 5 MID, 3 FWD; maximum 3 players per club",
+    "lineup": "predicted legal XI and predicted captain; no automatic substitutions or chips",
+    "transfers": "one free transfer per gameweek; additional transfers cost 4 points; free-transfer rollovers are not modeled",
+    "pricing": "price at acquisition; incoming players use their current price; FPL selling-price effects are not modeled"
+  },
+  "summary": [
+    {
+      "strategy": "Fixture churn",
+      "net_points": 552.0,
+      "squad_points": 1692.0,
+      "transfer_hits": 1140,
+      "transfers": 314
+    },
+    {
+      "strategy": "Fixture hybrid",
+      "net_points": 1565.0,
+      "squad_points": 1565.0,
+      "transfer_hits": 0,
+      "transfers": 29
+    },
+    {
+      "strategy": "Quality hold",
+      "net_points": 1489.0,
+      "squad_points": 1489.0,
+      "transfer_hits": 0,
+      "transfers": 0
+    }
+  ]
+}

@@ -149,12 +149,14 @@ def pre_match_elo(fixtures: pd.DataFrame, k: float = 24.0, home_bonus: float = 6
 
 def get_fixture_data(seasons: tuple[str, ...], cache: Path,
                      data_root: Path | None = None,
-                     freeze_elo_by_event: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
+                     freeze_elo_by_event: bool = False,
+                     positions: tuple[str, ...] | None = ("MID", "FWD")) -> tuple[pd.DataFrame, pd.DataFrame]:
     all_players, all_fixtures = [], []
     for season in seasons:
         p, f = download_season(season, cache, data_root)
         p["season"] = season
-        p = p.loc[p["position"].isin(("MID", "FWD"))].copy()
+        if positions is not None:
+            p = p.loc[p["position"].isin(positions)].copy()
         if "GW" not in p and "round" in p:
             p["GW"] = p["round"]
         missing = set(COLS).difference(p.columns)

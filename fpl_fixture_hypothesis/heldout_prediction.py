@@ -18,7 +18,7 @@ HOLDOUT_SEASON = "2025-26"
 BASELINE_FEATURES = [
     "prior_points_6", "prior_minutes_6", "prior_60_rate_6",
     "prior_onfield_points_8", "season_points_per_fixture",
-    "season_minutes_per_fixture", "value", "is_fwd", "event_scaled",
+    "season_minutes_per_fixture", "value", "is_gk", "is_def", "is_fwd", "event_scaled",
 ]
 FIXTURE_FEATURES = BASELINE_FEATURES + ["opp_100", "own_100", "elo_gap_100", "home"]
 
@@ -63,6 +63,8 @@ def pre_deadline_features(appearances: pd.DataFrame) -> pd.DataFrame:
 
     for col in ("value", "event", "total_points", "minutes"):
         d[col] = pd.to_numeric(d[col], errors="coerce")
+    d["is_gk"] = d["position"].eq("GK").astype(float)
+    d["is_def"] = d["position"].eq("DEF").astype(float)
     d["is_fwd"] = d["position"].eq("FWD").astype(float)
     d["event_scaled"] = d["event"] / 38.0
     d["opp_100"] = (d["opp_elo"] - 1500.0) / 100.0
