@@ -101,6 +101,12 @@ fixtures in the same gameweek therefore receive the same player-history features
 while their individual fixture features may differ. Fixture predictions are
 summed before player-gameweek metrics are calculated.
 
+This older comparison does **not** isolate opponent strength: its baseline
+also omits home advantage and own-team Elo, while its fixture-aware model adds
+all three. It uses the price in the archived fixture row, which is not a
+verified deadline snapshot. Treat its top-20 ranking as a diagnostic, not
+evidence for an opponent-Elo-specific transfer gain.
+
 The script also trains a separate start-probability model and point models for
 players who start and players who do not. Exact start labels are available for
 2022–23 through 2024–25; the start model is evaluated on 2025–26. Its held-out
@@ -122,6 +128,36 @@ Outputs are written under `heldout_results/`:
 
 The top-20 calculation is a ranking diagnostic without FPL squad rules or
 transfer costs.
+
+## Prospective fixture-value validation
+
+Run `python fpl_fixture_hypothesis/prospective_validation.py` using the local
+project-level `data/` archive. It compares three nested ridge regressions:
+historical player quality, prior minutes, prior 60-minute rate, last observed
+price, position, home advantage, gameweek, and own-team Elo; then opponent Elo;
+then an opponent-Elo by long-term-quality interaction. The long-term quality
+feature is the player's mean points across **all earlier season fixtures**,
+shrunk toward 2.5 points using five pseudo-fixtures. This is a modeling prior,
+not an estimated player rating. All features precede the earliest kickoff in
+the gameweek. Elo uses only earlier actual kickoffs and is frozen for the whole
+gameweek. Double-gameweek fixtures share their player history but receive
+individual opponent ratings.
+
+The main target is unconditional fixture points: all archived MID/FWD
+player-fixture rows in GW 9+ with five earlier fixture records and a last
+observed price, including zero-minute rows. Walk-forward tests train on
+earlier seasons and test 2022–23, 2023–24, 2024–25, and 2025–26 in turn.
+`prospective_results/summary.json` holds metrics, gameweek-clustered bootstrap
+intervals, coefficient checks, Elo carryover comparisons, and matchup groups.
+The script also emits a row-level out-of-sample CSV for audit.
+
+On 50,125 out-of-sample fixture rows, baseline MAE is 1.0373 points.
+Adding opponent Elo alone raises MAE to 1.0419, though RMSE falls from
+2.0194 to 2.0159. Adding the interaction lowers MAE to 1.0336 and RMSE to
+2.0133. Thus the three-way comparison finds a small, model-dependent gain,
+not a clear standalone opponent-Elo gain. A separate 60+-minute diagnostic
+has larger fixture gains but conditions on minutes that are unknown at the
+deadline. No transfer strategy is optimized in this validation.
 
 ## 3. Constrained squad backtest
 

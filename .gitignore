@@ -9,3 +9,6 @@ data/
 # Local caches created by analysis and plotting tools.
 .cache/
 .matplotlib/
+
+# Reproducible row-level forecast audit; keep compact summary results in Git.
+fpl_fixture_hypothesis/prospective_results/oos_predictions.csv
