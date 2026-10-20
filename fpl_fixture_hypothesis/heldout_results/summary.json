@@ -12,6 +12,7 @@
   ],
   "holdout_season": "2025-26",
   "features_frozen_by_gameweek": true,
+  "elo_frozen_by_gameweek": true,
   "fixture_level": {
     "baseline": {
       "observations": 13071,
@@ -23,11 +24,11 @@
     },
     "fixture_aware": {
       "observations": 13071,
-      "mae": 0.9952563794983385,
-      "rmse": 1.949639553685398,
+      "mae": 0.9947523981770324,
+      "rmse": 1.9502258685414477,
       "mean_actual": 1.1883559023793129,
-      "mean_prediction": 1.1750173861698607,
-      "spearman": 0.7229627481572685
+      "mean_prediction": 1.1750583776119237,
+      "spearman": 0.7227589062257285
     }
   },
   "player_gameweek": {
@@ -42,16 +43,16 @@
       },
       "fixture_aware": {
         "observations": 12843,
-        "mae": 1.0072217184989263,
-        "rmse": 1.9696369903515212,
+        "mae": 1.0067530651509111,
+        "rmse": 1.970235635646753,
         "mean_actual": 1.209452620104337,
-        "mean_prediction": 1.1958773070642565,
-        "spearman": 0.7242581416216001
+        "mean_prediction": 1.1959190262217123,
+        "spearman": 0.7240692398546973
       },
       "paired_gameweek_bootstrap": {
-        "mae_improvement": 0.0015375243261168423,
-        "low_95": -0.0030278386807608085,
-        "high_95": 0.005946902559319013,
+        "mae_improvement": 0.0020714671995114343,
+        "low_95": -0.0023719987694885035,
+        "high_95": 0.00635830110680331,
         "gameweeks": 30
       }
     },
@@ -67,24 +68,24 @@
       },
       "fixture_aware": {
         "observations": 3249,
-        "mae": 2.2511820613117033,
-        "rmse": 3.126311703079692,
+        "mae": 2.252499124663025,
+        "rmse": 3.1267821149677415,
         "mean_actual": 3.1372730070791013,
-        "mean_prediction": 3.024863497424228,
-        "spearman": 0.253095104539785
+        "mean_prediction": 3.029272771125847,
+        "spearman": 0.2525053295003858
       },
       "paired_gameweek_bootstrap": {
-        "mae_improvement": 0.010223417611135772,
-        "low_95": -0.004710803049019499,
-        "high_95": 0.02418352456709209,
+        "mae_improvement": 0.00900216370898462,
+        "low_95": -0.00505523944301954,
+        "high_95": 0.02245194622741357,
         "gameweeks": 30
       }
     }
   },
   "unconstrained_top20_likely_starters": {
     "baseline_realized_points": 2573.0,
-    "fixture_aware_realized_points": 2710.0,
-    "difference": 137.0,
+    "fixture_aware_realized_points": 2720.0,
+    "difference": 147.0,
     "note": "Diagnostic ranking comparison; no budget, squad, captaincy, or transfer constraints."
   }
 }

@@ -135,6 +135,7 @@ def save_outputs(test: pd.DataFrame, gameweeks: pd.DataFrame, out: Path) -> dict
         "training_seasons": list(SEASONS),
         "holdout_season": HOLDOUT_SEASON,
         "features_frozen_by_gameweek": True,
+        "elo_frozen_by_gameweek": True,
         "fixture_level": {
             "baseline": metrics(test["total_points"], test["baseline_prediction"]),
             "fixture_aware": metrics(test["total_points"], test["fixture_prediction"]),
@@ -195,7 +196,10 @@ def main() -> None:
     args = parser.parse_args()
 
     seasons = SEASONS + (HOLDOUT_SEASON,)
-    appearances, _ = get_fixture_data(seasons, Path(__file__).parent / "data", args.data_root)
+    appearances, _ = get_fixture_data(
+        seasons, Path(__file__).parent / "data", args.data_root,
+        freeze_elo_by_event=True,
+    )
     frame = pre_deadline_features(appearances)
     train = frame.loc[frame["season"].isin(SEASONS)].copy()
     test = frame.loc[frame["season"].eq(HOLDOUT_SEASON)].copy()

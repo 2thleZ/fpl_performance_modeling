@@ -111,10 +111,14 @@ def download_season(season: str, cache: Path, data_root: Path | None = None) -> 
     return p, f
 
 
-def pre_match_elo(fixtures: pd.DataFrame, k: float = 24.0, home_bonus: float = 65.0) -> pd.DataFrame:
-    """Ratings are frozen for concurrent kickoffs, updated only after matches finish.
+def pre_match_elo(fixtures: pd.DataFrame, k: float = 24.0, home_bonus: float = 65.0,
+                  freeze_by_event: bool = False) -> pd.DataFrame:
+    """Calculate chronological Elo ratings before a fixture or gameweek.
 
-    Teams begin each season at 1500. We exclude GW 1-8 from statistical tests.
+    Ratings are always frozen for concurrent kickoffs. With ``freeze_by_event``,
+    every fixture in a gameweek receives the rating available at that deadline;
+    this is required for pre-deadline forecasts and prevents double-gameweek
+    results from informing a later fixture's forecast.
     """
     f = fixtures.copy()
     for c in ("id", "event", "team_h", "team_a", "team_h_score", "team_a_score"):
@@ -124,7 +128,8 @@ def pre_match_elo(fixtures: pd.DataFrame, k: float = 24.0, home_bonus: float = 6
     f = f.sort_values(["kickoff_time", "id"]).reset_index(drop=True)
     ratings: dict[int, float] = {}
     records = []
-    for time, matches in f.groupby("kickoff_time", sort=True):
+    batch = "event" if freeze_by_event else "kickoff_time"
+    for _, matches in f.groupby(batch, sort=True):
         delta: dict[int, float] = {}
         # Do not use outcomes from simultaneous fixtures to rate their opponents.
         for m in matches.itertuples(index=False):
@@ -143,7 +148,8 @@ def pre_match_elo(fixtures: pd.DataFrame, k: float = 24.0, home_bonus: float = 6
 
 
 def get_fixture_data(seasons: tuple[str, ...], cache: Path,
-                     data_root: Path | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+                     data_root: Path | None = None,
+                     freeze_elo_by_event: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
     all_players, all_fixtures = [], []
     for season in seasons:
         p, f = download_season(season, cache, data_root)
@@ -167,7 +173,7 @@ def get_fixture_data(seasons: tuple[str, ...], cache: Path,
         if duplicate_count:
             print(f"Warning: {season}: {duplicate_count} duplicate player-fixture records dropped")
             p = p.drop_duplicates(["element", "fixture"])
-        elo = pre_match_elo(f)
+        elo = pre_match_elo(f, freeze_by_event=freeze_elo_by_event)
         elo["season"] = season
         # Attach season-specific Elo levels for descriptive tier comparisons.
         eligible = elo.loc[elo["event"] >= 9]
