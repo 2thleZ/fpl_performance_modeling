@@ -1,0 +1,38 @@
+{
+  "seasons": [
+    "2022-23",
+    "2023-24",
+    "2024-25"
+  ],
+  "appearances": 8410,
+  "unique_players_per_season": 576,
+  "unique_fixtures": 913,
+  "analysis_condition": "MID/FWD; at least 60 minutes played; GW 9+; >=5 prior appearances of 60+ minutes",
+  "quality_mean": 3.891743480692004,
+  "quality_q25": 2.7142857142857144,
+  "quality_q75": 4.75,
+  "per_100_opponent_elo_slopes": {
+    "bottom_quartile_quality": {
+      "slope_per_100_elo": -0.5263030903567474,
+      "low_95": -0.6427511442333039,
+      "high_95": -0.40985503648019084
+    },
+    "top_quartile_quality": {
+      "slope_per_100_elo": -0.6401928285141195,
+      "low_95": -0.7894219930327419,
+      "high_95": -0.4909636639954972
+    }
+  },
+  "interaction": {
+    "estimate": -0.05594583628783196,
+    "p_value": 0.12926251610963846,
+    "ci_low": -0.12822706962042515,
+    "ci_high": 0.016335397044761245
+  },
+  "min_75_regression": {
+    "opponent_coef": -0.5313972783099119,
+    "interaction_coef": -0.038705942771845914,
+    "opponent_p": 2.322445829680647e-15,
+    "interaction_p": 0.3505586590525237
+  }
+}

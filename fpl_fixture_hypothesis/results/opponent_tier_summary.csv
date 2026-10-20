@@ -1,0 +1,19 @@
+position,quality_class,opp_tier,appearances,avg_points,median_points
+FWD,Bottom quartile,Weak,38,5.657894736842105,5.5
+FWD,Bottom quartile,Medium,49,4.020408163265306,2.0
+FWD,Bottom quartile,Strong,45,3.6666666666666665,2.0
+FWD,Middle,Weak,266,4.567669172932331,2.0
+FWD,Middle,Medium,228,4.074561403508772,2.0
+FWD,Middle,Strong,239,3.581589958158996,2.0
+FWD,Top quartile,Weak,227,5.348017621145375,2.0
+FWD,Top quartile,Medium,215,4.888372093023256,2.0
+FWD,Top quartile,Strong,207,4.719806763285024,2.0
+MID,Bottom quartile,Weak,655,3.312977099236641,2.0
+MID,Bottom quartile,Medium,638,2.8260188087774294,2.0
+MID,Bottom quartile,Strong,690,2.584057971014493,2.0
+MID,Middle,Weak,1120,4.1553571428571425,3.0
+MID,Middle,Medium,1124,3.763345195729537,2.0
+MID,Middle,Strong,1078,3.3608534322820036,2.0
+MID,Top quartile,Weak,543,5.064456721915286,3.0
+MID,Top quartile,Medium,523,5.103250478011472,3.0
+MID,Top quartile,Strong,525,4.220952380952381,2.0
