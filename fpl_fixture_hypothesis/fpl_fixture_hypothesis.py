@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Exploratory FPL fixture-strength hypothesis test.
 
-Downloads historical, public, third-party archived FPL CSVs on the user's computer.
-Does not call the official FPL service. Run: python fpl_fixture_hypothesis.py
+Reads historical, third-party archived FPL CSVs on the user's computer.
+Does not call the official FPL service. Run from the project root with:
+python fpl_fixture_hypothesis/fpl_fixture_hypothesis.py --data-root data
 """
 from __future__ import annotations
 
@@ -18,28 +19,78 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-SEASONS = ("2022-23", "2023-24", "2024-25")
+SEASONS = ("2016-17", "2017-18", "2018-19", "2019-20", "2020-21",
+           "2021-22", "2022-23", "2023-24", "2024-25")
+SUPPORTED_SEASONS = SEASONS + ("2025-26",)
 BASE = "https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data"
 COLS = ("season", "element", "position", "fixture", "minutes", "total_points", "was_home")
+POSITION_NAMES = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
+
+
+def read_csv(path: Path) -> pd.DataFrame:
+    """Read archive files, including older seasons stored with Latin-1 names."""
+    try:
+        return pd.read_csv(path, low_memory=False)
+    except UnicodeDecodeError:
+        return pd.read_csv(path, low_memory=False, encoding="latin-1")
+
+
+def reconstruct_fixtures(gws: pd.DataFrame) -> pd.DataFrame:
+    """Rebuild the fixture table for 2016-17 and 2017-18 from player-match rows."""
+    p = gws.copy()
+    home_flag = (p["was_home"] if p["was_home"].dtype == bool else
+                 p["was_home"].astype(str).str.lower().eq("true"))
+    p["was_home"] = home_flag
+    event_col = "GW" if "GW" in p else "round"
+    common = (p.groupby("fixture", as_index=False)
+              .agg(event=(event_col, "first"), kickoff_time=("kickoff_time", "first"),
+                   team_h_score=("team_h_score", "first"), team_a_score=("team_a_score", "first")))
+    home = (p.loc[p["was_home"]].groupby("fixture", as_index=False)
+            .agg(team_a=("opponent_team", "first")))
+    away = (p.loc[~p["was_home"]].groupby("fixture", as_index=False)
+            .agg(team_h=("opponent_team", "first")))
+    fixtures = common.merge(home, on="fixture", validate="one_to_one").merge(
+        away, on="fixture", validate="one_to_one")
+    fixtures = fixtures.rename(columns={"fixture": "id"})
+    if len(fixtures) != p["fixture"].nunique():
+        raise ValueError("Could not reconstruct every fixture from gameweek rows")
+    return fixtures
+
+
+def add_positions(gws: pd.DataFrame, players: pd.DataFrame) -> pd.DataFrame:
+    if "position" in gws:
+        return gws
+    lookup = players.set_index("id")["element_type"].map(POSITION_NAMES)
+    out = gws.copy()
+    out["position"] = pd.to_numeric(out["element"], errors="coerce").map(lookup)
+    if out["position"].isna().any():
+        missing = out.loc[out["position"].isna(), "element"].nunique()
+        raise ValueError(f"Could not map positions for {missing} player IDs")
+    return out
 
 
 def download_season(season: str, cache: Path, data_root: Path | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     if data_root is not None:
-        paths = {
-            "gws": data_root / season / "gws" / "merged_gw.csv",
-            "fixtures": data_root / season / "fixtures.csv",
-        }
-        for name, path in paths.items():
-            if not path.is_file():
-                raise FileNotFoundError(f"Missing {season} {name}: {path}")
-        return (pd.read_csv(paths["gws"], low_memory=False),
-                pd.read_csv(paths["fixtures"], low_memory=False))
+        gws_path = data_root / season / "gws" / "merged_gw.csv"
+        players_path = data_root / season / "players_raw.csv"
+        fixtures_path = data_root / season / "fixtures.csv"
+        if not gws_path.is_file():
+            raise FileNotFoundError(f"Missing {season} gameweeks: {gws_path}")
+        p = read_csv(gws_path)
+        if "position" not in p:
+            if not players_path.is_file():
+                raise FileNotFoundError(f"Missing {season} player metadata: {players_path}")
+            p = add_positions(p, read_csv(players_path))
+        f = read_csv(fixtures_path) if fixtures_path.is_file() else reconstruct_fixtures(p)
+        return p, f
     paths = {
         "gws": (f"{BASE}/{season}/gws/merged_gw.csv", cache / f"{season}_merged_gw.csv"),
-        "fixtures": (f"{BASE}/{season}/fixtures.csv", cache / f"{season}_fixtures.csv"),
+        "players": (f"{BASE}/{season}/players_raw.csv", cache / f"{season}_players_raw.csv"),
     }
-    out = {}
+    out: dict[str, pd.DataFrame] = {}
     for k, (url, path) in paths.items():
+        if k == "players" and "gws" in out and "position" in out["gws"]:
+            continue
         if not path.exists() or path.stat().st_size == 0:
             print(f"Downloading {season} {k} from third-party historical repository...")
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -48,8 +99,16 @@ def download_season(season: str, cache: Path, data_root: Path | None = None) -> 
             except Exception:
                 path.unlink(missing_ok=True)
                 raise
-        out[k] = pd.read_csv(path, low_memory=False)
-    return out["gws"], out["fixtures"]
+        out[k] = read_csv(path)
+    p = add_positions(out["gws"], out["players"]) if "position" not in out["gws"] else out["gws"]
+    fixture_path = cache / f"{season}_fixtures.csv"
+    if season in ("2016-17", "2017-18"):
+        f = reconstruct_fixtures(p)
+    else:
+        if not fixture_path.exists() or fixture_path.stat().st_size == 0:
+            urllib.request.urlretrieve(f"{BASE}/{season}/fixtures.csv", fixture_path)
+        f = read_csv(fixture_path)
+    return p, f
 
 
 def pre_match_elo(fixtures: pd.DataFrame, k: float = 24.0, home_bonus: float = 65.0) -> pd.DataFrame:
@@ -270,7 +329,7 @@ def main():
     parser.add_argument("--cache", type=Path, default=Path(__file__).resolve().parent / "data")
     parser.add_argument("--data-root", type=Path, help="Local archive data directory with season subfolders")
     parser.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
-    parser.add_argument("--seasons", nargs="+", choices=SEASONS, default=list(SEASONS))
+    parser.add_argument("--seasons", nargs="+", choices=SUPPORTED_SEASONS, default=list(SEASONS))
     args = parser.parse_args()
     players, fixtures = get_fixture_data(tuple(args.seasons), args.cache, args.data_root)
     print(f"Loaded {len(players):,} attacker-fixture rows and {len(fixtures):,} fixtures")

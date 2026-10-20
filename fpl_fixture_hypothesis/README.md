@@ -11,7 +11,9 @@ downloaded archive in the project-level `data/` directory, run from the project 
 python fpl_fixture_hypothesis/fpl_fixture_hypothesis.py --data-root data
 ```
 
-This reads local CSVs only. Alternatively, the script can download the archived CSVs:
+This reads local CSVs only. The default hypothesis sample stops at 2024–25 so that
+2025–26 remains available as a held-out prediction test. Alternatively, the script
+can download the archived CSVs:
 
 ```bash
 python -m pip install pandas numpy matplotlib statsmodels
@@ -22,7 +24,10 @@ python fpl_fixture_hypothesis.py
 
 ## Scope
 
-- Seasons: 2022–23, 2023–24, 2024–25.
+- Seasons: every completed season from 2016–17 through 2024–25. The archive lacks
+  standalone fixture tables for 2016–17 and 2017–18, so the script reconstructs
+  those fixtures from the player-match rows. Position labels missing from older
+  gameweek files are joined from each season's `players_raw.csv`.
 - An observation is a player **in one match**, not an entire gameweek (double gameweeks count as multiple matches).
 - Primary analysis: midfielders and forwards who played at least 60 minutes, in gameweek 9 onward, and already had at least five earlier appearances of 60+ minutes in the same season.
 - Outcome: actual FPL points in that match.
@@ -53,7 +58,9 @@ python fpl_fixture_hypothesis.py
 2. The Elo approach is a starting model. More rigorous follow-up: carry ratings across seasons with promotion/relegation adjustments, distinguish attack/defence strength, or use independent pre-match bookmaker odds as a validation source.
 3. Prior-form estimates may be volatile with only five earlier qualifying appearances; check sensitivity to longer history.
 4. The relationship may be nonlinear; a next iteration should use opponent-strength bins or smooth curves and test home/away and MID/FWD interactions separately.
-5. FPL scoring and data collection may vary across seasons. Validate missing rows, duplicates, and scoring rules before inference beyond these seasons.
+5. FPL scoring and data collection vary across seasons. The script normalizes the
+   fields needed here, but comparisons across eras can still reflect rule and data
+   collection changes.
 6. Points per fixture differ from points per gameweek. The eventual squad simulation must handle blank/double gameweeks and player availability.
 7. The historical community archive is not a guarantee of unrestricted rights to the underlying league data. Review licensing/terms if distributing derived datasets.
 8. Regenerate the outputs from the local archive before interpreting them. Do **not** interpret placeholder/synthetic tests as football evidence.

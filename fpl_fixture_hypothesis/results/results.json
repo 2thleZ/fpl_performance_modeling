@@ -1,38 +1,44 @@
 {
   "seasons": [
+    "2016-17",
+    "2017-18",
+    "2018-19",
+    "2019-20",
+    "2020-21",
+    "2021-22",
     "2022-23",
     "2023-24",
     "2024-25"
   ],
-  "appearances": 8410,
-  "unique_players_per_season": 576,
-  "unique_fixtures": 913,
+  "appearances": 25404,
+  "unique_players_per_season": 1756,
+  "unique_fixtures": 2714,
   "analysis_condition": "MID/FWD; at least 60 minutes played; GW 9+; >=5 prior appearances of 60+ minutes",
-  "quality_mean": 3.891743480692004,
-  "quality_q25": 2.7142857142857144,
+  "quality_mean": 3.8136038400287102,
+  "quality_q25": 2.625,
   "quality_q75": 4.75,
   "per_100_opponent_elo_slopes": {
     "bottom_quartile_quality": {
-      "slope_per_100_elo": -0.5263030903567474,
-      "low_95": -0.6427511442333039,
-      "high_95": -0.40985503648019084
+      "slope_per_100_elo": -0.42820519253771294,
+      "low_95": -0.49184718263572236,
+      "high_95": -0.3645632024397035
     },
     "top_quartile_quality": {
-      "slope_per_100_elo": -0.6401928285141195,
-      "low_95": -0.7894219930327419,
-      "high_95": -0.4909636639954972
+      "slope_per_100_elo": -0.6485967310479759,
+      "low_95": -0.7362751093185831,
+      "high_95": -0.5609183527773687
     }
   },
   "interaction": {
-    "estimate": -0.05594583628783196,
-    "p_value": 0.12926251610963846,
-    "ci_low": -0.12822706962042515,
-    "ci_high": 0.016335397044761245
+    "estimate": -0.10371366518130017,
+    "p_value": 1.7722901099110688e-06,
+    "ci_low": -0.1462594631364708,
+    "ci_high": -0.06116786722612952
   },
   "min_75_regression": {
-    "opponent_coef": -0.5313972783099119,
-    "interaction_coef": -0.038705942771845914,
-    "opponent_p": 2.322445829680647e-15,
-    "interaction_p": 0.3505586590525237
+    "opponent_coef": -0.5405584769763392,
+    "interaction_coef": -0.09458646149008698,
+    "opponent_p": 2.1952684565780117e-51,
+    "interaction_p": 6.710315718458884e-05
   }
 }
