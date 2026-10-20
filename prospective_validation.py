@@ -171,7 +171,7 @@ def validation(d: pd.DataFrame, population: str) -> tuple[dict, pd.DataFrame]:
             continue
         for name, cols in features.items():
             fitted = model().fit(train[cols], train.total_points)
-            test[name] = np.maximum(0., fitted.predict(test[cols]))
+            test[name] = fitted.predict(test[cols])
         split[season] = {name: score(test.total_points, test[name]) for name in features}
         parts.append(test)
     oos = pd.concat(parts, ignore_index=True)
@@ -204,7 +204,7 @@ def quality_ablation(d: pd.DataFrame) -> dict:
                 cols = base_cols + extra
                 fitted = model().fit(train[cols], train.total_points)
                 scored[(quality_name, fixture_name)].append((
-                    test.total_points.to_numpy(), np.maximum(0., fitted.predict(test[cols]))))
+                    test.total_points.to_numpy(), fitted.predict(test[cols])))
     return {quality_name: {
         fixture_name: score(np.concatenate([x[0] for x in scored[(quality_name, fixture_name)]]),
                             np.concatenate([x[1] for x in scored[(quality_name, fixture_name)]]))
