@@ -15,4 +15,9 @@ data/
 # Reproducible row-level forecast audit; keep compact summary results in Git.
 prospective_results/oos_predictions.csv
 model_comparison_results/oos_predictions.csv
+model_comparison_results/oos_predictions.csv.gz
+model_comparison_results/checkpoints/
 candidate_universe_results/candidate_universe.csv
+
+# Colab runs keep large predictions and resumable cells outside Git.
+colab_results/

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import gc
 import json
 import os
 import time
@@ -28,6 +29,7 @@ FEATURE_SPECS = {
     "interaction": BASE + ["opp_100", "quality_x_opp"],
 }
 KEYS = ["season", "event", "player_key", "fixture"]
+CHECKPOINT_SCHEMA = 2
 
 
 def likely_starter_mask(frame: pd.DataFrame) -> pd.Series:
@@ -219,12 +221,13 @@ def predict_play_probability(estimator: Any, x: pd.DataFrame) -> np.ndarray:
 
 def run_prediction(model_name: str, approach: str, train: pd.DataFrame,
                    test: pd.DataFrame, features: list[str], seed: int,
-                   foundation_estimators: int, device: str) -> tuple[np.ndarray, np.ndarray | None, int]:
+                   foundation_estimators: int, device: str
+                   ) -> tuple[np.ndarray, np.ndarray | None, np.ndarray | None, int]:
     x_train, x_test = train[features], test[features]
     if approach == "direct":
         model = build_estimator(model_name, "regression", seed, foundation_estimators, device)
         model.fit(x_train, train.total_points)
-        return predict_mean(model, model_name, x_test), None, len(train)
+        return predict_mean(model, model_name, x_test), None, None, len(train)
     classifier = build_estimator(model_name, "classification", seed, foundation_estimators, device)
     played = train.minutes.gt(0).astype(int)
     classifier.fit(x_train, played)
@@ -233,18 +236,70 @@ def run_prediction(model_name: str, approach: str, train: pd.DataFrame,
     regressor = build_estimator(model_name, "regression", seed, foundation_estimators, device)
     regressor.fit(conditional[features], conditional.total_points)
     conditional_mean = predict_mean(regressor, model_name, x_test)
-    return play_probability * conditional_mean, play_probability, len(conditional)
+    return play_probability * conditional_mean, play_probability, conditional_mean, len(conditional)
 
 
-def prepare_dataset() -> pd.DataFrame:
-    players, _ = get_fixture_data(SEASON_LIST, ROOT / "cache", DATA, positions=("MID", "FWD"))
-    return deadline_features(add_elo(players, carried=False)).reset_index(drop=True)
+def prepare_dataset(data_root: Path = DATA) -> pd.DataFrame:
+    players, _ = get_fixture_data(SEASON_LIST, ROOT / "cache", data_root,
+                                  positions=("MID", "FWD"))
+    return deadline_features(add_elo(players, carried=False, data_root=data_root)).reset_index(drop=True)
+
+
+def checkpoint_paths(out: Path, run_id: str) -> tuple[Path, Path]:
+    stem = run_id.replace(":", "__")
+    root = out / "checkpoints"
+    return root / f"{stem}.json", root / f"{stem}.csv.gz"
+
+
+def save_checkpoint(out: Path, entry: dict[str, Any], prediction: pd.DataFrame | None) -> None:
+    """Atomically save one experiment cell so interrupted Colab runs can resume."""
+    metadata_path, prediction_path = checkpoint_paths(out, entry["run_id"])
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_tmp = metadata_path.with_suffix(".json.tmp")
+    metadata_tmp.write_text(json.dumps(entry, indent=2, allow_nan=False))
+    metadata_tmp.replace(metadata_path)
+    if prediction is not None:
+        prediction_tmp = prediction_path.with_name(prediction_path.name + ".tmp")
+        prediction.to_csv(prediction_tmp, index=False, compression="gzip")
+        prediction_tmp.replace(prediction_path)
+
+
+def load_checkpoint(out: Path, run_id: str, expected: dict[str, Any] | None = None
+                    ) -> tuple[dict[str, Any], pd.DataFrame] | None:
+    metadata_path, prediction_path = checkpoint_paths(out, run_id)
+    if not metadata_path.is_file() or not prediction_path.is_file():
+        return None
+    entry = json.loads(metadata_path.read_text())
+    if entry.get("status") != "ok":
+        return None
+    if expected and any(entry.get(key) != value for key, value in expected.items()):
+        return None
+    return entry, pd.read_csv(prediction_path)
+
+
+def release_model_memory() -> None:
+    gc.collect()
+    try:
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+            torch.mps.empty_cache()
+    except ImportError:
+        pass
+
+
+def safe_error_message(exc: Exception) -> str:
+    message = str(exc)
+    token = os.environ.get("TABPFN_TOKEN")
+    return message.replace(token, "<redacted>") if token else message
 
 
 def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
     os.environ.setdefault("SKB_DATA_DIRECTORY", str((ROOT / ".cache" / "skrub").resolve()))
     os.environ.setdefault("TABPFN_MODEL_CACHE_DIR", str((ROOT / ".model_cache" / "tabpfn").resolve()))
-    data = prepare_dataset()
+    args.out.mkdir(parents=True, exist_ok=True)
+    data = prepare_dataset(args.data_root)
     if args.test_limit:
         data = pd.concat([
             g if season not in args.test_seasons else g.sample(min(len(g), args.test_limit), random_state=args.seeds[0])
@@ -261,6 +316,9 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
         "models": args.models, "approaches": args.approaches,
         "feature_specs": args.feature_specs,
         "foundation_estimators": int(args.foundation_estimators), "device": args.device,
+        "data_root": str(args.data_root.resolve()),
+        "checkpoint_schema": CHECKPOINT_SCHEMA,
+        "test_limit": args.test_limit,
     }
     predictions, runs = [], []
     for context_size in args.context_sizes:
@@ -276,20 +334,42 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                     for model_name in args.models:
                         for approach in args.approaches:
                             run_id = f"{season}:{context_size}:{seed}:{spec}:{model_name}:{approach}"
+                            checkpoint_signature = {
+                                "checkpoint_schema": CHECKPOINT_SCHEMA,
+                                "foundation_estimators": int(args.foundation_estimators),
+                                "device": args.device,
+                                "test_limit": args.test_limit,
+                                "test_n": int(len(test)),
+                            }
+                            if args.resume:
+                                checkpoint = load_checkpoint(
+                                    args.out, run_id, checkpoint_signature)
+                                if checkpoint is not None:
+                                    entry, out = checkpoint
+                                    runs.append(entry)
+                                    predictions.append(out)
+                                    print(run_id, "RESUMED", entry["all"]["rmse"])
+                                    continue
                             started = time.perf_counter()
                             try:
-                                prediction, play_probability, conditional_n = run_prediction(
+                                prediction, play_probability, conditional_prediction, conditional_n = run_prediction(
                                     model_name, approach, train, test, features, seed,
                                     args.foundation_estimators, args.device)
                             except Exception as exc:  # preserve other completed experiment cells
                                 elapsed = time.perf_counter() - started
+                                error_message = safe_error_message(exc)
                                 runs.append({"run_id": run_id, "season": season,
                                              "context_size": int(context_size), "seed": int(seed),
                                              "feature_spec": spec, "model": model_name,
                                              "approach": approach, "train_n": int(len(train)),
                                              "seconds": float(elapsed), "status": "error",
-                                             "error_type": type(exc).__name__, "error": str(exc)})
-                                print(run_id, "ERROR", type(exc).__name__, str(exc).splitlines()[0])
+                                             "error_type": type(exc).__name__, "error": error_message,
+                                             **checkpoint_signature})
+                                if args.resume:
+                                    save_checkpoint(args.out, runs[-1], None)
+                                print(run_id, "ERROR", type(exc).__name__,
+                                      error_message.splitlines()[0])
+                                release_model_memory()
                                 continue
                             elapsed = time.perf_counter() - started
                             out = test[KEYS + ["position", "price_m", "minutes", "total_points",
@@ -302,12 +382,14 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                             out["approach"] = approach
                             out["prediction"] = prediction
                             out["play_probability"] = play_probability if play_probability is not None else np.nan
+                            out["conditional_prediction"] = (
+                                conditional_prediction if conditional_prediction is not None else np.nan)
                             predictions.append(out)
                             entry = {"run_id": run_id, "season": season, "context_size": int(context_size),
                                      "seed": int(seed), "feature_spec": spec, "model": model_name,
                                      "approach": approach, "train_n": int(len(train)),
                                      "conditional_train_n": int(conditional_n), "seconds": float(elapsed),
-                                     "status": "ok"}
+                                     "status": "ok", **checkpoint_signature}
                             for population, mask in {"all": np.ones(len(out), dtype=bool),
                                                      "likely_starter": likely_starter_mask(out)}.items():
                                 subset = out.loc[mask]
@@ -319,7 +401,10 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                                 entry["participation_brier"] = float(brier_score_loss(
                                     test.minutes.gt(0).astype(int), play_probability))
                             runs.append(entry)
+                            if args.resume:
+                                save_checkpoint(args.out, entry, out)
                             print(run_id, f"{elapsed:.1f}s", entry["all"]["rmse"])
+                            release_model_memory()
     prediction_frame = pd.concat(predictions, ignore_index=True) if predictions else pd.DataFrame()
     summary: dict[str, Any] = {"dataset": metadata, "runs": runs, "overall": [],
                                "model_vs_ridge": [], "fixture_spec_improvements": []}
@@ -356,17 +441,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--test-seasons", nargs="+", default=list(TEST_SEASONS))
     parser.add_argument("--foundation-estimators", type=int, default=8)
     parser.add_argument("--device", default="auto")
+    parser.add_argument("--data-root", type=Path, default=DATA)
+    parser.add_argument("--resume", action="store_true",
+                        help="Checkpoint each experiment cell and reuse completed cells")
+    parser.add_argument("--compress-predictions", action="store_true",
+                        help="Write the combined row-level predictions as CSV gzip")
     parser.add_argument("--test-limit", type=int, help="Optional rows per test season for a smoke run")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     return parser.parse_args()
 
 
-def main() -> None:
-    args = parse_args()
-    summary, predictions = run(args)
-    args.out.mkdir(parents=True, exist_ok=True)
+def save_results(args: argparse.Namespace, summary: dict[str, Any],
+                 predictions: pd.DataFrame) -> None:
     (args.out / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False))
-    predictions.to_csv(args.out / "oos_predictions.csv", index=False)
+    prediction_name = "oos_predictions.csv.gz" if args.compress_predictions else "oos_predictions.csv"
+    predictions.to_csv(args.out / prediction_name, index=False,
+                       compression="gzip" if args.compress_predictions else None)
     flat_runs = pd.json_normalize(summary["runs"])
     flat_runs.drop(columns=[c for c in flat_runs.columns if "calibration_bins" in c]).to_csv(
         args.out / "metrics.csv", index=False)
@@ -375,6 +465,12 @@ def main() -> None:
     pd.DataFrame(summary["fixture_spec_improvements"]).to_csv(
         args.out / "fixture_spec_improvements.csv", index=False)
     print(f"Saved {args.out / 'summary.json'} and {len(predictions):,} prediction rows")
+
+
+def main() -> None:
+    args = parse_args()
+    summary, predictions = run(args)
+    save_results(args, summary, predictions)
 
 
 if __name__ == "__main__":

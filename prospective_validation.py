@@ -67,13 +67,15 @@ def strict_elo(fixtures: pd.DataFrame, season: str, previous: dict[str, float] |
         name: ratings.get(t, 1500.) for t, name in names.items()}
 
 
-def add_elo(d: pd.DataFrame, carried: bool) -> pd.DataFrame:
+def add_elo(d: pd.DataFrame, carried: bool, data_root: Path = DATA,
+            cache_root: Path | None = None) -> pd.DataFrame:
     all_ratings = []
     previous = None
+    cache_root = cache_root or ROOT / "cache"
     for season in SEASON_LIST:
-        _, f = download_season(season, ROOT / "cache", DATA)
+        _, f = download_season(season, cache_root, data_root)
         names = None
-        teams = DATA / season / "teams.csv"
+        teams = data_root / season / "teams.csv"
         if carried and teams.is_file():
             t = pd.read_csv(teams)
             names = dict(zip(t.id.astype(int), t.name.astype(str).str.lower().str.strip()))

@@ -1,0 +1,33 @@
+{
+  "test_seasons": ["2022-23", "2023-24", "2024-25", "2025-26"],
+  "foundation_estimators": 4,
+  "device": "auto",
+  "top_k": 3,
+  "bootstrap_reps": 5000,
+  "phases": {
+    "direct_scale": {
+      "enabled": true,
+      "models": ["ridge", "catboost", "tabpfn", "tabicl"],
+      "approaches": ["direct"],
+      "feature_specs": ["baseline", "elo", "interaction"],
+      "context_sizes": [5000, 10000, 20000],
+      "seeds": [20261020, 20261021, 20261022]
+    },
+    "two_stage_5k": {
+      "enabled": true,
+      "models": ["ridge", "catboost", "tabpfn", "tabicl"],
+      "approaches": ["two_stage"],
+      "feature_specs": ["baseline", "elo", "interaction"],
+      "context_sizes": [5000],
+      "seeds": [20261020, 20261021, 20261022]
+    },
+    "classical_full_history": {
+      "enabled": true,
+      "models": ["ridge", "catboost"],
+      "approaches": ["direct"],
+      "feature_specs": ["baseline", "elo", "interaction"],
+      "context_sizes": [0],
+      "seeds": [20261020, 20261021, 20261022]
+    }
+  }
+}

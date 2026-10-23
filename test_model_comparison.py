@@ -1,5 +1,7 @@
 """Unit checks for the model-comparison protocol."""
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import numpy as np
 import pandas as pd
@@ -10,6 +12,8 @@ from model_comparison import (
     pooled_model_comparisons,
     regression_metrics,
     sample_training_rows,
+    load_checkpoint,
+    save_checkpoint,
 )
 
 
@@ -53,6 +57,17 @@ class ModelComparisonTests(unittest.TestCase):
         self.assertAlmostEqual(model_result["mae_gain"], 0.5)
         self.assertEqual(fixture_result["gameweeks"], 2)
         self.assertAlmostEqual(fixture_result["rmse_gain"], 0.5)
+
+    def test_successful_checkpoint_round_trip(self):
+        entry = {"run_id": "2025-26:5000:1:baseline:ridge:direct",
+                 "status": "ok", "all": {"rmse": 2.0}}
+        prediction = pd.DataFrame({"season": ["2025-26"], "prediction": [1.25]})
+        with TemporaryDirectory() as directory:
+            out = Path(directory)
+            save_checkpoint(out, entry, prediction)
+            loaded_entry, loaded_prediction = load_checkpoint(out, entry["run_id"])
+        self.assertEqual(loaded_entry["run_id"], entry["run_id"])
+        self.assertAlmostEqual(loaded_prediction.prediction.iloc[0], 1.25)
 
 
 if __name__ == "__main__":

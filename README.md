@@ -206,6 +206,50 @@ rescheduling hindsight. No new transfer strategy should be optimized until the
 model comparison is repeated at larger contexts and the candidate-universe
 limitations are addressed.
 
+### Larger-context Colab experiment
+
+[FPL_Model_Comparison_Colab.ipynb](FPL_Model_Comparison_Colab.ipynb) is the
+recommended entry point for the larger experiment. Add `TABPFN_TOKEN` through
+Colab Secrets, select a GPU runtime, and run the notebook from top to bottom.
+It clones this repository and a sparse copy of the historical data repository;
+the token is kept in memory and excluded from every output.
+
+The default configuration in `colab_experiment_config.json` runs:
+
+- Direct Ridge, CatBoost, TabPFN, and TabICL models with 5k, 10k, and 20k
+  historical rows across three random seeds.
+- Two-stage participation and conditional-points models with 5k rows across
+  the same three seeds.
+- Ridge and CatBoost direct models using every available earlier-season row.
+
+Each season-model-seed cell is written to Google Drive when it completes.
+Re-running the notebook skips successful cells and retries failures. The final
+`fpl_colab_results.zip` contains compressed row-level predictions, model error
+and calibration summaries, participation and conditional-points diagnostics,
+season-by-season selection results, environment versions, failures, timings,
+the Git commit, and a short findings report.
+
+The selection analysis ranks pre-deadline likely starters within matched
+position and price bands, sums double-gameweek forecasts and realized points,
+and compares each fixture-aware top three with the baseline top three. Paired
+confidence intervals resample gameweeks after averaging the random seeds, so
+seeds are not counted as independent seasons. The report also records how often
+fixture information actually changes a selected player.
+
+The same workflow can be launched outside the notebook:
+
+```bash
+.venv/bin/python colab_experiment.py \
+  --data-root data \
+  --out colab_results
+```
+
+Use `--bundle-only` to rebuild the analysis and ZIP archive from whatever
+checkpoints have completed. Use `--phases direct_scale` to run only one named
+phase. Context size `0` in the configuration means all available historical
+rows. If a model cannot support a requested context on the available hardware,
+the failure is recorded while the remaining experiment cells continue.
+
 ## 3. Constrained squad backtest
 
 Run `strategy_backtest.py` with the local archive command above. Its training
