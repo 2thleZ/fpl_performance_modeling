@@ -1,0 +1,10 @@
+{
+  "source_git_commit": "6c3867dfa9df5be08ba4c1666afefd90517141d7",
+  "source_manifest_sha256": "0cf5c4e306840f1640f7d7609b3042f86a6be4ba6563029d75d091f8609f8af4",
+  "successful_runs": 506,
+  "failed_runs": 142,
+  "bootstrap_reps": 5000,
+  "bootstrap_seed": 20261026,
+  "interval_unit": "season-gameweek after averaging losses or selection totals across seeds",
+  "status": "exploratory; comparisons chosen after viewing the original report"
+}

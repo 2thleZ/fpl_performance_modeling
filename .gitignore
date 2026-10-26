@@ -21,3 +21,5 @@ candidate_universe_results/candidate_universe.csv
 
 # Colab runs keep large predictions and resumable cells outside Git.
 colab_results/
+fpl_colab_results/
+fpl_colab_results.zip

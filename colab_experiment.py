@@ -20,7 +20,7 @@ from selection_analysis import analyze, save_outputs
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_CONFIG = ROOT / "colab_experiment_config.json"
-PACKAGE_NAMES = ["numpy", "pandas", "scikit-learn", "scipy", "catboost", "tabpfn", "tabicl"]
+PACKAGE_NAMES = ["numpy", "pandas", "scikit-learn", "scipy", "catboost", "tabpfn", "tabicl", "torch", "skrub", "huggingface-hub"]
 
 
 def load_config(path: Path) -> dict[str, Any]:
@@ -94,8 +94,23 @@ def load_combined_predictions(paths: list[Path]) -> pd.DataFrame:
 
 def collect_forecast_summary(out: Path, selected_phases: list[str]) -> pd.DataFrame:
     frames = []
+    coverage_frames = []
     for name in selected_phases:
         phase_dir = out / "phases" / name
+        phase_summary = phase_dir / "summary.json"
+        metadata = (json.loads(phase_summary.read_text()).get("dataset", {})
+                    if phase_summary.is_file() else {})
+        run_frame = pd.DataFrame(checkpoint_runs(phase_dir))
+        if not run_frame.empty:
+            done = run_frame.loc[run_frame.status.eq("ok")]
+            coverage = done.groupby(["context_size", "feature_spec", "model", "approach"]).agg(
+                completed_cells=("run_id", "nunique"),
+                test_seasons_completed=("season", "nunique")).reset_index()
+            expected = len(metadata.get("test_seasons", [])) * len(metadata.get("seeds", []))
+            coverage["expected_cells"] = expected or None
+            coverage["complete_coverage"] = coverage.completed_cells.eq(expected) if expected else False
+            coverage["phase"] = name
+            coverage_frames.append(coverage)
         path = phase_dir / "overall_metrics.csv"
         if path.is_file() and path.stat().st_size:
             frame = pd.read_csv(path)
@@ -116,7 +131,10 @@ def collect_forecast_summary(out: Path, selected_phases: list[str]) -> pd.DataFr
     ) if column in metrics]
     summary = metrics.groupby(group, as_index=False)[values].mean()
     seeds = metrics.groupby(group, as_index=False).seed.nunique().rename(columns={"seed": "seeds"})
-    return summary.merge(seeds, on=group, validate="one_to_one")
+    summary = summary.merge(seeds, on=group, validate="one_to_one")
+    if coverage_frames:
+        summary = summary.merge(pd.concat(coverage_frames, ignore_index=True), on=group, validate="one_to_one")
+    return summary
 
 
 def markdown_table(frame: pd.DataFrame, columns: list[str]) -> str:
@@ -163,8 +181,10 @@ def write_bundle_report(out: Path, forecast: pd.DataFrame,
 
 Metrics below are chronological out-of-sample results averaged across the
 completed random seeds. Lower MAE and RMSE are better.
+`complete_coverage=False` marks partial results that must not be compared with
+full-season configurations. See forecast_summary.csv for cell and season counts.
 
-{markdown_table(forecast, ['phase', 'context_size', 'model', 'approach', 'feature_spec', 'seeds', 'all.mae', 'all.rmse', 'likely_starter.mae', 'likely_starter.rmse']) if not forecast.empty else 'No completed forecast summaries were available.'}
+{markdown_table(forecast, ['phase', 'context_size', 'model', 'approach', 'feature_spec', 'seeds', 'complete_coverage', 'all.mae', 'all.rmse', 'likely_starter.mae', 'likely_starter.rmse']) if not forecast.empty else 'No completed forecast summaries were available.'}
 
 ## Matched likely-starter selections
 
@@ -220,11 +240,18 @@ def create_bundle(out: Path, config: dict[str, Any], data_root: Path,
         "completed_runs": sum(row.get("status") == "ok" for row in runs),
         "failed_runs": [
             {key: row.get(key) for key in
-             ("run_id", "error_type", "error", "seconds")}
+             ("run_id", "error_type", "error", "seconds", "traceback", "diagnostics")}
             for row in runs if row.get("status") != "ok"
         ],
         "prediction_rows": int(len(predictions)),
         "config": config,
+        # Invocation environment is not evidence of the device used by old resumed cells.
+        # Newly fitted cells also carry their own runtime and resolved-device metadata.
+        "phase_invocation_runtimes": {
+            name: json.loads((out / "phases" / name / "summary.json").read_text())
+                .get("dataset", {}).get("runtime")
+            for name in selected_phases if (out / "phases" / name / "summary.json").is_file()
+        },
     }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2, allow_nan=False))
     (out / "config_effective.json").write_text(json.dumps(config, indent=2))

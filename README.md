@@ -285,6 +285,51 @@ simulation assumptions. `weekly_results.csv` records points, hits, transfers,
 free-transfer balances, and squad costs by gameweek.
 `cumulative_points.png` plots cumulative net points.
 
+## Audit of the October 2026 Colab results
+
+The received run completed 506 of 648 configurations. All Ridge, CatBoost and
+TabPFN runs succeeded; TabICL completed only two of 144. The original report's
+TabICL rows cover one season and one seed, so they cannot be compared directly
+with the complete models. Newly generated reports mark incomplete coverage.
+
+The saved-prediction audit is in [colab_audit_results/AUDIT.md](colab_audit_results/AUDIT.md).
+It checks forecast errors, matched selections, seasons, positions, price bands,
+and candidate counts. Reproduce it without fitting models:
+
+```bash
+.venv/bin/python audit_colab_results.py --source fpl_colab_results
+```
+
+TabPFN 20k + Elo improves MAE versus full-history Ridge + interaction, but its
+RMSE and selection advantages are uncertain. Within TabPFN, Elo adds 0.111
+realized points per pick (pointwise 95% interval 0.029 to 0.193). The gain is
+stronger for midfielders; forwards improve in only one of four seasons.
+Premium groups often force all three candidates to be picked. These are
+exploratory ranking comparisons, not evidence that a paid transfer is profitable.
+
+### Short TabICL diagnostic in Colab
+
+The original exception message has no traceback, and local repeated calls have
+not reproduced it. `tabicl_diagnostic.py` records the environment, cached weight
+hash, fitted devices, failure stage and traceback, then stops on the first error.
+The main benchmark now also records these diagnostics for newly fitted cells.
+Old resumed cells retain their original metadata; a new invocation's GPU does
+not establish what hardware an older checkpoint used.
+
+In the existing Colab notebook, run its setup cells to mount Drive, load Secrets
+and pull the updated code. Add a separate cell and run:
+
+```python
+!python tabicl_diagnostic.py --data-root {DATA_REPO / 'data'} --out {OUT / 'tabicl_diagnostic.json'} --device cuda --include-tabpfn
+```
+
+This uses 5,000 historical rows and 64 test rows for each of 24 short diagnostic
+calls, alternating TabPFN and TabICL across two seasons, three feature sets,
+and direct/two-stage prediction. It does not overwrite benchmark checkpoints.
+Return `tabicl_diagnostic.json` before attempting a full retry. Explicit `cuda`
+also makes a missing GPU fail visibly. No token is written to the diagnostics.
+The standalone CPU check can use `--device cpu` without `--include-tabpfn`.
+
 ## Notebook
 
 `FPL_Fixture_Hypothesis.ipynb` is an interactive presentation of the original

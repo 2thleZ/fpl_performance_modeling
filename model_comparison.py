@@ -7,6 +7,7 @@ import gc
 import json
 import os
 import time
+import traceback
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,7 @@ from sklearn.preprocessing import StandardScaler
 
 from fpl_fixture_hypothesis import get_fixture_data
 from prospective_validation import BASE, DATA, ROOT, SEASON_LIST, TEST_SEASONS, add_elo, deadline_features
+from runtime_diagnostics import fitted_devices, runtime_metadata
 
 DEFAULT_OUT = ROOT / "model_comparison_results"
 FEATURE_SPECS = {
@@ -221,20 +223,30 @@ def predict_play_probability(estimator: Any, x: pd.DataFrame) -> np.ndarray:
 
 def run_prediction(model_name: str, approach: str, train: pd.DataFrame,
                    test: pd.DataFrame, features: list[str], seed: int,
-                   foundation_estimators: int, device: str
+                   foundation_estimators: int, device: str, diagnostics: dict | None = None
                    ) -> tuple[np.ndarray, np.ndarray | None, np.ndarray | None, int]:
     x_train, x_test = train[features], test[features]
+    diagnostics = diagnostics if diagnostics is not None else {}
     if approach == "direct":
+        diagnostics["stage"] = "regression_fit"
         model = build_estimator(model_name, "regression", seed, foundation_estimators, device)
         model.fit(x_train, train.total_points)
+        diagnostics["regression_devices"] = fitted_devices(model, model_name)
+        diagnostics["stage"] = "regression_predict"
         return predict_mean(model, model_name, x_test), None, None, len(train)
+    diagnostics["stage"] = "participation_fit"
     classifier = build_estimator(model_name, "classification", seed, foundation_estimators, device)
     played = train.minutes.gt(0).astype(int)
     classifier.fit(x_train, played)
+    diagnostics["participation_devices"] = fitted_devices(classifier, model_name)
+    diagnostics["stage"] = "participation_predict"
     play_probability = predict_play_probability(classifier, x_test)
     conditional = train.loc[played.eq(1)]
+    diagnostics["stage"] = "conditional_fit"
     regressor = build_estimator(model_name, "regression", seed, foundation_estimators, device)
     regressor.fit(conditional[features], conditional.total_points)
+    diagnostics["regression_devices"] = fitted_devices(regressor, model_name)
+    diagnostics["stage"] = "conditional_predict"
     conditional_mean = predict_mean(regressor, model_name, x_test)
     return play_probability * conditional_mean, play_probability, conditional_mean, len(conditional)
 
@@ -290,7 +302,10 @@ def release_model_memory() -> None:
 
 
 def safe_error_message(exc: Exception) -> str:
-    message = str(exc)
+    return redact_secret(str(exc))
+
+
+def redact_secret(message: str) -> str:
     token = os.environ.get("TABPFN_TOKEN")
     return message.replace(token, "<redacted>") if token else message
 
@@ -299,6 +314,8 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
     os.environ.setdefault("SKB_DATA_DIRECTORY", str((ROOT / ".cache" / "skrub").resolve()))
     os.environ.setdefault("TABPFN_MODEL_CACHE_DIR", str((ROOT / ".model_cache" / "tabpfn").resolve()))
     args.out.mkdir(parents=True, exist_ok=True)
+    hardware = runtime_metadata()
+    print("Runtime:", json.dumps(hardware), flush=True)
     data = prepare_dataset(args.data_root)
     if args.test_limit:
         data = pd.concat([
@@ -306,6 +323,7 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
             for season, g in data.groupby("season", sort=False)
         ], ignore_index=True)
     metadata = {
+        "runtime": hardware,
         "definition": "MID/FWD fixture rows, GW 9+, >=5 earlier fixture records, previous observed price available",
         "seasons": list(SEASON_LIST), "test_seasons": args.test_seasons,
         "rows": int(len(data)), "zero_minutes": int(data.minutes.eq(0).sum()),
@@ -351,10 +369,11 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                                     print(run_id, "RESUMED", entry["all"]["rmse"])
                                     continue
                             started = time.perf_counter()
+                            diagnostics: dict[str, Any] = {}
                             try:
                                 prediction, play_probability, conditional_prediction, conditional_n = run_prediction(
                                     model_name, approach, train, test, features, seed,
-                                    args.foundation_estimators, args.device)
+                                    args.foundation_estimators, args.device, diagnostics)
                             except Exception as exc:  # preserve other completed experiment cells
                                 elapsed = time.perf_counter() - started
                                 error_message = safe_error_message(exc)
@@ -364,6 +383,9 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                                              "approach": approach, "train_n": int(len(train)),
                                              "seconds": float(elapsed), "status": "error",
                                              "error_type": type(exc).__name__, "error": error_message,
+                                             "traceback": redact_secret(traceback.format_exc()),
+                                             "diagnostics": diagnostics,
+                                             "runtime": hardware,
                                              **checkpoint_signature})
                                 if args.resume:
                                     save_checkpoint(args.out, runs[-1], None)
@@ -390,6 +412,8 @@ def run(args: argparse.Namespace) -> tuple[dict[str, Any], pd.DataFrame]:
                                      "approach": approach, "train_n": int(len(train)),
                                      "conditional_train_n": int(conditional_n), "seconds": float(elapsed),
                                      "status": "ok", **checkpoint_signature}
+                            entry["diagnostics"] = diagnostics
+                            entry["runtime"] = hardware
                             for population, mask in {"all": np.ones(len(out), dtype=bool),
                                                      "likely_starter": likely_starter_mask(out)}.items():
                                 subset = out.loc[mask]

@@ -1,0 +1,9 @@
+position,price_band,observed_groups,scored_groups,forced_top_three_groups,groups_with_choice
+FWD,under_6,120,120,1,119
+FWD,6_to_8,120,119,1,118
+FWD,8_to_10,118,39,39,0
+FWD,10_plus,106,1,1,0
+MID,under_6,120,120,0,120
+MID,6_to_8,120,120,0,120
+MID,8_to_10,120,112,16,96
+MID,10_plus,118,44,41,3
